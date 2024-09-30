@@ -1,135 +1,166 @@
-# This workflow will deploy the LZA
-name: LZA Deployment
+name: 'Terraform Plan/Apply'
 
 on:
-  # When you directly push in the main branch
-  push:   
-    branches: 
-      - main
-    paths:
-      - 'scenarios/aca-internal/bicep/**'
-      - '!scenarios/aca-internal/bicep/**.md'
-  # when pull request is issued for the main branch
+  push:
+    branches:
+    - main
   pull_request:
-    branches: 
-      - main
-    paths:
-      - 'scenarios/aca-internal/bicep/**'
-      - '!scenarios/aca-internal/bicep/**.md'
+    branches:
+    - main
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
+
+#Special permissions required for OIDC authentication
+permissions:
+  id-token: write
+  contents: read
+  pull-requests: write
   
-# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+
+#These environment variables are used by the terraform azure provider to setup OIDD authenticate. 
+env:
+  ARM_CLIENT_ID: "${{ secrets.AZURE_CLIENT_ID }}"
+  ARM_SUBSCRIPTION_ID: "${{ secrets.AZURE_SUBSCRIPTION_ID }}"
+  ARM_TENANT_ID: "${{ secrets.AZURE_TENANT_ID }}"
+  #TFSTATE_RG: "${{ env.TFSTATE_RG }}"
+  #TFSTATE_STORAGE_ACCOUNT: "${{ env.TFSTATE_STORAGE_ACCOUNT }}"
+  
+
 jobs:
-  # The lint job performs linting on the bicep code
-  lint:
-    # The type of runner that the job will run on
+  terraform-plan:
+    name: 'Terraform Plan'
     runs-on: ubuntu-latest
-
-    # Steps represent a sequence of tasks that will be executed as part of the job
-    steps:
-      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      - uses: actions/checkout@v3
-
-      # Runs the Bicep linter to ensure build is successful
-      - name: Run Bicep linter
-        run: az bicep build --file ./scenarios/aca-internal/bicep/main.bicep
-
-  validate:
-    runs-on: ubuntu-latest
-    needs: [lint]
-    steps:
-      - uses: actions/checkout@v3
-      - uses: azure/login@v1
-        name: Sign in to Azure
-        with:
-          creds: ${{ secrets.AZURE_CREDENTIALS }}
-      - uses: azure/arm-deploy@v1.0.9
-        name: Run preflight validation
-        with:
-          deploymentName: ${{ github.run_number }}
-          scope: subscription
-          region: ${{ vars.LOCATION }}
-          template: ./scenarios/aca-internal/bicep/main.bicep
-          parameters: ./scenarios/aca-internal/bicep/main.parameters.jsonc
-          deploymentMode: Validate
-
-  preview:
-    runs-on: ubuntu-latest
-    needs: [lint, validate]
-    steps:
-      - uses: actions/checkout@v3
-      - uses: azure/login@v1
-        name: Sign in to Azure
-        with:
-          creds: ${{ secrets.AZURE_CREDENTIALS }}
-      - uses: Azure/cli@v1
-        name: Run what-if
-        with:
-          azcliversion: 2.45.0
-          inlineScript: |
-            az deployment sub what-if \
-              --location ${{ vars.LOCATION }} \
-              --template-file ./scenarios/aca-internal/bicep/main.bicep \
-              --parameters ./scenarios/aca-internal/bicep/main.parameters.jsonc \
-              --parameters deployHelloWorldSample=false
-
-  deploy:
-    runs-on: ubuntu-latest
-    needs: [preview]
-    steps:
-      - uses: actions/checkout@v3
-      - uses: azure/login@v1
-        name: Sign in to Azure
-        with:
-          creds: ${{ secrets.AZURE_CREDENTIALS }}
-      - uses: azure/arm-deploy@v1.0.9
-        id: deployment
-        name: Deployment
-        with:
-          deploymentName: "GitHubAction-${{ github.run_number }}"
-          scope: subscription
-          region: ${{ vars.LOCATION }}
-          template: ./scenarios/aca-internal/bicep/main.bicep
-          parameters: ./scenarios/aca-internal/bicep/main.parameters.jsonc deployHelloWorldSample=true
-          failOnStdErr: false
+    env:
+      #this is needed since we are running terraform with read-only permissions
+      ARM_SKIP_PROVIDER_REGISTRATION: true
+      TF_VAR_RESOURCE_GROUP_NAME: ${{ vars.TFSTATE_RG }}
+      TF_VAR_STORAGE_ACCOUNT_NAME: ${{ vars.TFSTATE_STORAGE_ACCOUNT }}
     outputs:
-      spokeResourceGroupName: ${{ steps.deployment.outputs.spokeResourceGroupName }}
-      hubResourceGroupName: ${{ steps.deployment.outputs.hubResourceGroupName }}
+      tfplanExitCode: ${{ steps.tf-plan.outputs.exitcode }}
 
-  # teardown:
-  #   runs-on: ubuntu-latest
-  #   needs: [deploy]
-  #   env:
-  #     ENABLE_TEARDOWN: true    
+    steps:
+    #- name: 'Az CLI login'
+    #  uses: azure/login@v1
+    #  with:
+    #    client-id: ${{ secrets.AZURE_CLIENT_ID }}
+    #    tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+    #    subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
     
-  #   steps:
-  #   - uses: trstringer/manual-approval@v1
-  #     name: Manual Approval of tear-down
-  #     if: vars.ENABLE_TEARDOWN == 'true'      
-  #     with:
-  #       secret: ${{ github.TOKEN }}
-  #       timeout-minutes: 120
-  #       approvers: thotheod,aarthiem,kpantos
-  #       minimum-approvals: 1
-  #       issue-title: "Deployed ACA-LZA GitHubAction-${{ github.run_number }}"
-  #       issue-body: "Please approve or deny the tear-down of deployment GitHubAction-${{ github.run_number }}"
-  #       exclude-workflow-initiator-as-approver: false
-  #       additional-approved-words: ''
-  #       additional-denied-words: ''
-    
-  #   - uses: azure/login@v1
-  #     if: vars.ENABLE_TEARDOWN == 'true'
-  #     name: Sign in to Azure
-  #     with:
-  #       creds: ${{ secrets.AZURE_CREDENTIALS }}
+    #- name: 'Run az commands'
+    #  run: |
+    #    az account show
+    #    az group list
+            
+    # Checkout the repository to the GitHub Actions runner
+    - name: Checkout
+      uses: actions/checkout@v4
+
+    # Install the latest version of the Terraform CLI
+    - name: Setup Terraform
+      uses: hashicorp/setup-terraform@v3
+      with:
+        terraform_wrapper: false
+
+    # Initialize a new or existing Terraform working directory by creating initial files, loading any remote state, downloading modules, etc.
+    - name: Terraform Init
+      run: terraform init
+
+    # Checks that all Terraform configuration files adhere to a canonical format
+    # Will fail the build if not
+    #- name: Terraform Format
+    #  run: terraform fmt -check
+
+    # Generates an execution plan for Terraform
+    # An exit code of 0 indicated no changes, 1 a terraform failure, 2 there are pending changes.
+    - name: Terraform Plan
+      id: tf-plan
+      run: |
+        export exitcode=0
+        terraform plan -detailed-exitcode -no-color -out tfplan || export exitcode=$?
+
+        echo "exitcode=$exitcode" >> $GITHUB_OUTPUT
         
-  #   - uses: Azure/cli@v1
-  #     name: Run tear-down
-  #     if: vars.ENABLE_TEARDOWN == 'true'
-  #     with:
-  #       azcliversion: 2.45.0
-  #       inlineScript: |
-  #         az group delete --name ${{ needs.deploy.outputs.spokeResourceGroupName }} --yes
-  #         az group delete --name ${{ needs.deploy.outputs.hubResourceGroupName }} --yes
-  #         az deployment sub delete --name "GitHubAction-${{ github.run_number }}" --no-wait
+        if [ $exitcode -eq 1 ]; then
+          echo Terraform Plan Failed!
+          exit 1
+        else 
+          exit 0
+        fi
+        
+    # Save plan to artifacts  
+    - name: Publish Terraform Plan
+      uses: actions/upload-artifact@v4
+      with:
+        name: tfplan
+        path: tfplan
+        
+    # Create string output of Terraform Plan
+    - name: Create String Output
+      id: tf-plan-string
+      run: |
+        TERRAFORM_PLAN=$(terraform show -no-color tfplan)
+        
+        delimiter="$(openssl rand -hex 8)"
+        echo "summary<<${delimiter}" >> $GITHUB_OUTPUT
+        echo "## Terraform Plan Output" >> $GITHUB_OUTPUT
+        echo "<details><summary>Click to expand</summary>" >> $GITHUB_OUTPUT
+        echo "" >> $GITHUB_OUTPUT
+        echo '```terraform' >> $GITHUB_OUTPUT
+        echo "$TERRAFORM_PLAN" >> $GITHUB_OUTPUT
+        echo '```' >> $GITHUB_OUTPUT
+        echo "</details>" >> $GITHUB_OUTPUT
+        echo "${delimiter}" >> $GITHUB_OUTPUT
+        
+    # Publish Terraform Plan as task summary
+    - name: Publish Terraform Plan to Task Summary
+      env:
+        SUMMARY: ${{ steps.tf-plan-string.outputs.summary }}
+      run: |
+        echo "$SUMMARY" >> $GITHUB_STEP_SUMMARY
+      
+    # If this is a PR post the changes
+    - name: Push Terraform Output to PR
+      if: github.ref != 'refs/heads/main'
+      uses: actions/github-script@v7
+      env:
+        SUMMARY: "${{ steps.tf-plan-string.outputs.summary }}"
+      with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const body = `${process.env.SUMMARY}`;
+            github.rest.issues.createComment({
+                issue_number: context.issue.number,
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                body: body
+            })
+                
+  terraform-apply:
+    name: 'Terraform Apply'
+    if: github.ref == 'refs/heads/main' && needs.terraform-plan.outputs.tfplanExitCode == 2
+    runs-on: ubuntu-latest
+    environment: erictest
+    needs: [terraform-plan]
+    
+    steps:
+    # Checkout the repository to the GitHub Actions runner
+    - name: Checkout
+      uses: actions/checkout@v4
+
+    # Install the latest version of Terraform CLI and configure the Terraform CLI configuration file with a Terraform Cloud user API token
+    - name: Setup Terraform
+      uses: hashicorp/setup-terraform@v3
+
+    # Initialize a new or existing Terraform working directory by creating initial files, loading any remote state, downloading modules, etc.
+    - name: Terraform Init
+      run: terraform init
+
+    # Download saved plan from artifacts  
+    - name: Download Terraform Plan
+      uses: actions/download-artifact@v4
+      with:
+        name: tfplan
+
+    # Terraform Apply
+    - name: Terraform Apply
+      run: terraform apply -auto-approve tfplan
