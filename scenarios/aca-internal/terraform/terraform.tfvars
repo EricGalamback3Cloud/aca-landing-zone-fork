@@ -41,6 +41,3 @@ workloadProfiles = [{
   minimum_count         = 1
   maximum_count         = 3
 }]
-
-resource_group_name     = "kat"
-container_name          = "tfstate2"
