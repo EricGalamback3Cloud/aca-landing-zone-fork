@@ -55,7 +55,7 @@ jobs:
     #    az group list
     - name: Get IP Address
       run: |
-        IP_ADDRESS=$(curl -s ifconfig.me)
+        IP_ADDRESS=$(curl -s https://api.github.com/meta | jq -r '.actions[]' | sed 's|/.*||' | paste -sd ',')
         echo "External IP is $IP_ADDRESS"
         echo "IP_ADDRESS=$IP_ADDRESS" >> $GITHUB_ENV
     
