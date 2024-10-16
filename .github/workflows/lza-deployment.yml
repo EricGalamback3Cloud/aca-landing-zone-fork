@@ -86,6 +86,8 @@ jobs:
         terraform -chdir=scenarios/aca-internal/terraform plan -detailed-exitcode -no-color -out tfplan || export exitcode=$?
 
         echo "exitcode=$exitcode" >> $GITHUB_OUTPUT
+
+        ls -al
         
         if [ $exitcode -eq 1 ]; then
           echo Terraform Plan Failed!
