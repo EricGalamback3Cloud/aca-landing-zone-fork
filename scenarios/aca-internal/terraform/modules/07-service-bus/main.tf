@@ -1,5 +1,5 @@
 module "serviceBus" {
-  source               = "../../shared/terraform/modules/service-bus"
+  source               = "../../../../shared/terraform/modules/service-bus"
   namespace_name       = var.namespace_name
   topic_name           = var.topic_name
   resource_group_name  = module.spoke.spokeResourceGroupName
