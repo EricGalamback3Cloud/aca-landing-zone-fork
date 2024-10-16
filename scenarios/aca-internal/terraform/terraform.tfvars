@@ -41,7 +41,7 @@ workloadProfiles = [{
   maximum_count         = 3
 }]
 
-namespace_name       = "pocnamespace"
+namespace_name       = "galamback"
 topic_name           = "poc-topic"
 sku                  = "Standard"
 enable_partitioning  = true
