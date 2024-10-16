@@ -55,7 +55,7 @@ jobs:
     #    az group list
     - name: Get IP Address
       run: |
-        IP_ADDRESS=$(curl -s https://api.github.com/meta | jq -r '.actions[]' | grep -E '^[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+' | sed 's|/.*||' | awk '{print "\"" $0 "/32\""}' | paste -sd ',')
+        IP_ADDRESS=$(curl -s https://api.github.com/meta | jq -r '.actions[]' | grep -E '^[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+' | sed 's|/.*||' | awk -F. '{print "\"" $1"."$2"."$3".0-"$1"."$2"."$3".255\""}' | paste -sd ',')
         echo "External IP is $IP_ADDRESS"
         echo "IP_ADDRESS=$IP_ADDRESS" >> $GITHUB_ENV
     
