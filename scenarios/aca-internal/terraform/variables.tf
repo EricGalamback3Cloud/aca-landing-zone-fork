@@ -321,11 +321,6 @@ variable "resource_group_name" {
   type        = string
 }
 
-variable "location" {
-  description = "The Azure region where the resources will be created."
-  type        = string
-}
-
 variable "sku" {
   description = "The SKU of the Service Bus namespace (Basic, Standard, or Premium)."
   type        = string
