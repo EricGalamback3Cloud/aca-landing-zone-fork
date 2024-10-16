@@ -8,7 +8,7 @@ variable "topic_name" {
   type        = string
 }
 
-variable "resource_group_name" {
+variable "resourceGroupName" {
   description = "The name of the resource group where the resources will be created."
   type        = string
 }

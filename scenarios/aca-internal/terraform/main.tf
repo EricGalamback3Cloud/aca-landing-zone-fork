@@ -134,7 +134,7 @@ module "serviceBus" {
   source = "./modules/07-service-bus"
   namespace_name = var.namespace_name
   topic_name = var.topic_name
-  resource_group_name = module.spoke.spokeResourceGroupName
+  resourceGroupName = module.spoke.spokeResourceGroupName
   location = var.location
   sku = var.sku
   enable_partitioning = true
