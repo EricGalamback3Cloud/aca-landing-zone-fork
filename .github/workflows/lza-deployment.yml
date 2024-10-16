@@ -175,7 +175,6 @@ jobs:
         path: scenarios/aca-internal/terraform/tfplan
 
     # Terraform Apply
-    - name: Terraform Apply
-      run: |
-        ls -al scenarios/aca-internal/terraform
-        terraform -chdir=scenarios/aca-internal/terraform apply -auto-approve tfplan/tfplan
+    #- name: Terraform Apply
+     # run: |
+        #terraform -chdir=scenarios/aca-internal/terraform apply -auto-approve tfplan/tfplan
