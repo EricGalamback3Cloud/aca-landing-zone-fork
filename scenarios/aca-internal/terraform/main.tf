@@ -137,8 +137,8 @@ module "serviceBus" {
   resource_group_name  = module.spoke.spokeResourceGroupName
   location             = var.location
   sku                  = "Standard"
-  enable_partitioning  = false
-  create_subscription  = false
+  enable_partitioning  = true
+  create_subscription  = true
   subscription_name    = "default-subscription"
   max_delivery_count   = 10
   lock_duration        = "PT1M"

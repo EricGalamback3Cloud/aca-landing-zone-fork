@@ -57,9 +57,3 @@ variable "lock_duration" {
 variable "tags" {
 
 }
-
-variable "enable_partitioning" {
-  description = "Enable partitioning for the topic."
-  type        = bool
-  default     = false
-}
