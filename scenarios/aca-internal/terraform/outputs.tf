@@ -1,6 +1,6 @@
-output "applicationGatewayPublicIp" {
-  value = module.applicationGateway.applicationGatewayPublicIp
-}
+#output "applicationGatewayPublicIp" {
+#  value = module.applicationGateway.applicationGatewayPublicIp
+#}
 
 output "hubResourceGroupName" {
   value = module.hub.hubResourceGroupName
