@@ -20,7 +20,6 @@ applicationGatewaySubnetAddressPrefix = "10.1.3.0/24"
 enableBastion            = true
 vmSize                   = "Standard_B2ms" # "Standard_B2als_v2" not supported in north europe
 vmAdminUsername          = "vmadmin"
-vmLinuxSshAuthorizedKeys = "<Your SSH public key>"
 vmJumpboxOSType          = "Linux"
 infraSubnetName          = "snet-infra"
 vmLinuxAuthenticationType = "sshPublicKey"
