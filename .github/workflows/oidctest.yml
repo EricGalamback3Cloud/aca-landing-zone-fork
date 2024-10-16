@@ -34,6 +34,6 @@ jobs:
 
     steps:
     - name: Checkout code
-      run: curl -s https://api.github.com/meta | jq -r '.actions[]'
+      run: curl ifconfig.me
                 
  
