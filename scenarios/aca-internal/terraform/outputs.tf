@@ -6,6 +6,6 @@ output "hubResourceGroupName" {
   value = module.hub.hubResourceGroupName
 }
 
-#output "spokeResourceGroupName" {
-#  value = module.spoke.spokeResourceGroupName
-#}
+output "spokeResourceGroupName" {
+  value = module.spoke.spokeResourceGroupName
+}
