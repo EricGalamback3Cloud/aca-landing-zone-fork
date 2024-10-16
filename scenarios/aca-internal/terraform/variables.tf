@@ -316,11 +316,6 @@ variable "topic_name" {
   type        = string
 }
 
-variable "resource_group_name" {
-  description = "The name of the resource group where the resources will be created."
-  type        = string
-}
-
 variable "sku" {
   description = "The SKU of the Service Bus namespace (Basic, Standard, or Premium)."
   type        = string
