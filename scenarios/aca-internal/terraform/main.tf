@@ -14,28 +14,28 @@ module "hub" {
   tags                                       = var.tags
 }
 
-#module "spoke" {
-#  source                                = "./modules/02-spoke"
-#  workloadName                          = var.workloadName
-#  environment                           = var.environment
-#  spokeResourceGroupName                = var.spokeResourceGroupName
- # location                              = var.location
- # vnetAddressPrefixes                   = var.spokeVnetAddressPrefixes
- # infraSubnetAddressPrefix              = var.infraSubnetAddressPrefix
- # infraSubnetName                       = var.infraSubnetName
- # privateEndpointsSubnetAddressPrefix   = var.privateEndpointsSubnetAddressPrefix
- # applicationGatewaySubnetAddressPrefix = var.applicationGatewaySubnetAddressPrefix
- # hubVnetId                             = module.hub.hubVnetId
- # vmSize                                = var.vmSize
- # vmAdminUsername                       = var.vmAdminUsername
- # vmAdminPassword                       = var.vmAdminPassword
- # vmLinuxSshAuthorizedKeys              = var.vmLinuxSshAuthorizedKeys
- # vmLinuxAuthenticationType             = var.vmLinuxAuthenticationType
- # vmJumpboxOSType                       = var.vmJumpboxOSType
-# jumpboxSubnetAddressPrefix            = var.vmJumpBoxSubnetAddressPrefix
- # firewallPrivateIp                     = module.hub.firewallPrivateIp
- # tags                                  = var.tags
-#}
+module "spoke" {
+  source                                = "./modules/02-spoke"
+  workloadName                          = var.workloadName
+  environment                           = var.environment
+  spokeResourceGroupName                = var.spokeResourceGroupName
+  location                              = var.location
+  vnetAddressPrefixes                   = var.spokeVnetAddressPrefixes
+  infraSubnetAddressPrefix              = var.infraSubnetAddressPrefix
+  infraSubnetName                       = var.infraSubnetName
+  privateEndpointsSubnetAddressPrefix   = var.privateEndpointsSubnetAddressPrefix
+  applicationGatewaySubnetAddressPrefix = var.applicationGatewaySubnetAddressPrefix
+  hubVnetId                             = module.hub.hubVnetId
+  vmSize                                = var.vmSize
+  vmAdminUsername                       = var.vmAdminUsername
+  vmAdminPassword                       = var.vmAdminPassword
+  vmLinuxSshAuthorizedKeys              = var.vmLinuxSshAuthorizedKeys
+  vmLinuxAuthenticationType             = var.vmLinuxAuthenticationType
+  vmJumpboxOSType                       = var.vmJumpboxOSType
+ jumpboxSubnetAddressPrefix            = var.vmJumpBoxSubnetAddressPrefix
+  firewallPrivateIp                     = module.hub.firewallPrivateIp
+  tags                                  = var.tags
+}
 
 #module "supportingServices" {
 #  source                              = "./modules/03-supporting-services"
