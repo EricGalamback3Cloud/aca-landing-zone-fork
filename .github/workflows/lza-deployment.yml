@@ -87,8 +87,6 @@ jobs:
 
         echo "exitcode=$exitcode" >> $GITHUB_OUTPUT
 
-        ls -al
-        
         if [ $exitcode -eq 1 ]; then
           echo Terraform Plan Failed!
           exit 1
@@ -172,4 +170,4 @@ jobs:
 
     # Terraform Apply
     - name: Terraform Apply
-      run: terraform apply -auto-approve tfplan
+      run: terraform -chdir=scenarios/aca-internal/terraform apply -auto-approve tfplan
