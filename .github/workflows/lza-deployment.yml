@@ -73,7 +73,12 @@ jobs:
     - name: Terraform Init
       #run: terraform -chdir=scenarios/aca-internal/terraform init --backend-config=storage_account_name="erictftesting2"
       #run: terraform -chdir=scenarios/aca-internal/terraform init --backend-config=resource_group_name="kat" --backend-config=storage_account_name="erictftesting2" --backend-config=container_name="tfstate2" --backend-config=key="acalza/terraform.state"
-      run: terraform -chdir=scenarios/aca-internal/terraform init --backend-config=resource_group_name="kat" --backend-config=storage_account_name="erictftesting2" --backend-config=container_name="tfstate2" --backend-config=key="tfplan"
+      run: |
+        terraform -chdir=scenarios/aca-internal/terraform init \
+          --backend-config=resource_group_name="kat" \
+          --backend-config=storage_account_name="erictftesting2" \
+          --backend-config=container_name="tfstate2" \ 
+          --backend-config=key="tfplan"
       #run: terraform -chdir=scenarios/aca-internal/terraform init
 
     # Checks that all Terraform configuration files adhere to a canonical format
@@ -88,7 +93,7 @@ jobs:
       run: |
         export exitcode=0
         
-        terraform -chdir=scenarios/aca-internal/terraform plan -detailed-exitcode -no-color -out tfplan || export exitcode=$?
+        terraform -chdir=scenarios/aca-internal/terraform plan -detailed-exitcode -no-color -out tfplan -var="clientIP=${{ env.IP_ADDRESS }} || export exitcode=$?
 
         echo "exitcode=$exitcode" >> $GITHUB_OUTPUT
 
