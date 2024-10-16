@@ -53,7 +53,12 @@ jobs:
     #  run: |
     #    az account show
     #    az group list
-            
+    - name: Get IP Address
+      run: |
+        IP_ADDRESS=$(curl -s ifconfig.me)
+        echo "External IP is $IP_ADDRESS"
+        echo "IP_ADDRESS=$IP_ADDRESS" >> $GITHUB_ENV
+    
     # Checkout the repository to the GitHub Actions runner
     - name: Checkout
       uses: actions/checkout@v4
