@@ -129,3 +129,18 @@ module "applicationGateway" {
   logAnalyticsWorkspaceId         = module.spoke.logAnalyticsWorkspaceId
   tags                            = var.tags
 }
+
+module "serviceBus" {
+  source               = "../../shared/terraform/modules/service-bus"
+  namespace_name       = "aca-internal-sb"
+  topic_name           = "aca-internal-topic"
+  resource_group_name  = module.spoke.spokeResourceGroupName
+  location             = var.location
+  sku                  = "Standard"
+  enable_partitioning  = false
+  create_subscription  = false
+  subscription_name    = "default-subscription"
+  max_delivery_count   = 10
+  lock_duration        = "PT1M"
+  tags                 = var.tags
+}
