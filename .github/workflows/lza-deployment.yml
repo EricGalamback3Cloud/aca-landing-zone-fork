@@ -34,7 +34,8 @@ jobs:
     env:
       #this is needed since we are running terraform with read-only permissions
       ARM_SKIP_PROVIDER_REGISTRATION: true
-      TF_LOG: debug
+      #TF_LOG: debug
+      TF_VAR_vmLinuxSshAuthorizedKeys: ${{ secrets.SSH_KEY }}
       #TF_VAR_RESOURCE_GROUP_NAME: ${{ vars.TFSTATE_RG }}
       #TF_VAR_STORAGE_ACCOUNT_NAME: ${{ vars.TFSTATE_STORAGE_ACCOUNT }}
     outputs:
