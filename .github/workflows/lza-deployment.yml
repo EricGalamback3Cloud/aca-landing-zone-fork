@@ -167,6 +167,7 @@ jobs:
       uses: actions/download-artifact@v4
       with:
         name: tfplan
+        path: scenarios/aca-internal/terraform/tfplan
 
     # Terraform Apply
     - name: Terraform Apply
