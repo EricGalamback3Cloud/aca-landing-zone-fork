@@ -93,7 +93,7 @@ jobs:
       run: |
         export exitcode=0
         
-        terraform -chdir=scenarios/aca-internal/terraform plan -detailed-exitcode -no-color -out tfplan -var="clientIP=${{ env.IP_ADDRESS }} || export exitcode=$?
+        terraform -chdir=scenarios/aca-internal/terraform plan -detailed-exitcode -no-color -out tfplan -var="clientIP=${{ env.IP_ADDRESS }}" || export exitcode=$?
 
         echo "exitcode=$exitcode" >> $GITHUB_OUTPUT
 
