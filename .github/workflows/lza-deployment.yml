@@ -170,4 +170,6 @@ jobs:
 
     # Terraform Apply
     - name: Terraform Apply
-      run: terraform -chdir=scenarios/aca-internal/terraform apply -auto-approve tfplan
+      run: |
+        ls -al
+        terraform apply -auto-approve tfplan
