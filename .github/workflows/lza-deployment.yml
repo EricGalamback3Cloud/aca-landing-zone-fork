@@ -77,7 +77,7 @@ jobs:
         terraform -chdir=scenarios/aca-internal/terraform init \
           --backend-config=resource_group_name="kat" \
           --backend-config=storage_account_name="erictftesting2" \
-          --backend-config=container_name="tfstate2" \ 
+          --backend-config=container_name="tfstate2" \
           --backend-config=key="tfplan"
       #run: terraform -chdir=scenarios/aca-internal/terraform init
 
