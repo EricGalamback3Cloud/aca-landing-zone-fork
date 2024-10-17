@@ -105,11 +105,11 @@ jobs:
     needs: [terraform-plan]
 
     steps:
-    - name: Get IP Address
-      run: |
-        IP_ADDRESS="${{ inputs.client_ip }}"
-        echo "External IP is $IP_ADDRESS"
-        echo "IP_ADDRESS=$IP_ADDRESS" >> $GITHUB_ENV
+    # - name: Get IP Address
+    #   run: |
+    #     IP_ADDRESS="${{ inputs.client_ip }}"
+    #     echo "External IP is $IP_ADDRESS"
+    #     echo "IP_ADDRESS=$IP_ADDRESS" >> $GITHUB_ENV
 
     - name: Checkout
       uses: actions/checkout@v4
@@ -118,11 +118,13 @@ jobs:
       uses: hashicorp/setup-terraform@v3
 
     - name: Terraform Init
-      run: terraform -chdir=${{ inputs.stack_directory }} init \
-        --backend-config=resource_group_name="${{ inputs.resource_group_name }}" \
-        --backend-config=storage_account_name="${{ inputs.storage_account_name }}" \
-        --backend-config=container_name="${{ inputs.container_name }}" \
-        --backend-config=key="${{ inputs.key }}"
+      run: |    
+        terraform -chdir=${{ inputs.stack_directory }} init \
+          --backend-config=resource_group_name="${{ inputs.resource_group_name }}" \
+          --backend-config=storage_account_name="${{ inputs.storage_account_name }}" \
+          --backend-config=container_name="${{ inputs.container_name }}" \
+          --backend-config=key="${{ inputs.key }}"
+
 
     - name: Download Terraform Plan
       uses: actions/download-artifact@v4
