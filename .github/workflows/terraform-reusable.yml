@@ -133,4 +133,4 @@ jobs:
         path: ${{ inputs.stack_directory }}/tfstate
 
     - name: Terraform Apply
-      run: terraform -chdir=${{ inputs.stack_directory }} apply -auto-approve tfplan/tfstate
+      run: terraform -chdir=${{ inputs.stack_directory }} apply -auto-approve tfstate/tfstate
