@@ -1,41 +1,6 @@
-module "hub" {
-  source                                     = "./modules/01-hub"
-  workloadName                               = var.workloadName
-  environment                                = var.environment
-  hubResourceGroupName                       = var.hubResourceGroupName
-  location                                   = var.location
-  vnetAddressPrefixes                        = var.hubVnetAddressPrefixes
-  enableBastion                              = var.enableBastion
-  bastionSubnetAddressPrefixes               = var.bastionSubnetAddressPrefixes
-  gatewaySubnetAddressPrefix                 = var.gatewaySubnetAddressPrefix
-  azureFirewallSubnetAddressPrefix           = var.azureFirewallSubnetAddressPrefix
-  azureFirewallSubnetManagementAddressPrefix = var.azureFirewallSubnetManagementAddressPrefix
-  infraSubnetAddressPrefix                   = var.infraSubnetAddressPrefix
-  tags                                       = var.tags
-}
 
-module "spoke" {
-  source                                = "./modules/02-spoke"
-  workloadName                          = var.workloadName
-  environment                           = var.environment
-  spokeResourceGroupName                = var.spokeResourceGroupName
-  location                              = var.location
-  vnetAddressPrefixes                   = var.spokeVnetAddressPrefixes
-  infraSubnetAddressPrefix              = var.infraSubnetAddressPrefix
-  infraSubnetName                       = var.infraSubnetName
-  privateEndpointsSubnetAddressPrefix   = var.privateEndpointsSubnetAddressPrefix
-  applicationGatewaySubnetAddressPrefix = var.applicationGatewaySubnetAddressPrefix
-  hubVnetId                             = module.hub.hubVnetId
-  vmSize                                = var.vmSize
-  vmAdminUsername                       = var.vmAdminUsername
-  vmAdminPassword                       = var.vmAdminPassword
-  vmLinuxSshAuthorizedKeys              = var.vmLinuxSshAuthorizedKeys
-  vmLinuxAuthenticationType             = var.vmLinuxAuthenticationType
-  vmJumpboxOSType                       = var.vmJumpboxOSType
- jumpboxSubnetAddressPrefix            = var.vmJumpBoxSubnetAddressPrefix
-  firewallPrivateIp                     = module.hub.firewallPrivateIp
-  tags                                  = var.tags
-}
+
+
 
 module "supportingServices" {
   source                              = "./modules/03-supporting-services"
