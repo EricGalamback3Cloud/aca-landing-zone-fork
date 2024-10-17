@@ -1,0 +1,23 @@
+name: 'Trigger Terraform Workflow'
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'stacks/01-hub/**'
+  pull_request:
+    branches:
+      - main
+    paths:
+      - 'stacks/01-hub/**'
+
+jobs:
+  call-terraform-workflow:
+    uses: ./.github/workflows/templates/terraform-reusable.yml
+    with:
+      terraform_directory: 'stacks/01-hub'
+      resource_group_name: 'kat'
+      storage_account_name: 'erictftesting2'
+      container_name: 'tfstate2'
+      key: 'hub/tfstate'
