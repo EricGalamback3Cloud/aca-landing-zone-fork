@@ -1,10 +1,10 @@
 data "terraform_remote_state" "hub" {
   backend = "azurerm"
-#   config = {
-#     storage_account_name = "your-hub-storage-account"
-#     container_name       = "terraform-state"
-#     key                  = "hub/tfstate"
-#   }
+  config = {
+    storage_account_name = "erictftesting2"
+    container_name       = "tfstate2"
+    key                  = "hub/tfstate"
+  }
 }
 
 output "hub_vnet_id" {
