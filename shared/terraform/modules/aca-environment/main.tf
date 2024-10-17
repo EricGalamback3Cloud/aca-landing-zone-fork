@@ -16,6 +16,12 @@ resource "azurerm_container_app_environment" "environment" {
       maximum_count         = workload_profile.value.maximum_count
     }
   }
+
+  lifecycle {
+    ignore_changes = [ 
+      id
+     ]
+  }
 }
 
 # resource "azurerm_container_app_environment_dapr_component" "daprComponent" {

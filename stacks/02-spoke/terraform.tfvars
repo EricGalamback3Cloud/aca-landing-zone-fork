@@ -1,0 +1,5 @@
+vmSize                   = "Standard_B2ms"
+vmAdminUsername          = "vmadmin"
+vmJumpboxOSType          = "Linux"
+infraSubnetName          = "snet-infra"
+vmLinuxAuthenticationType = "sshPublicKey"

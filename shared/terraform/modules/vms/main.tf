@@ -53,6 +53,15 @@ resource "azurerm_linux_virtual_machine" "linuxVm" {
     sku       = "20_04-lts-gen2"
     version   = "latest"
   }
+
+  lifecycle {
+    ignore_changes = [
+      admin_password,
+      admin_username,
+      disable_password_authentication,
+      admin_ssh_key
+    ]
+  }
 }
 
 resource "azurerm_windows_virtual_machine" "windowsVm" {
