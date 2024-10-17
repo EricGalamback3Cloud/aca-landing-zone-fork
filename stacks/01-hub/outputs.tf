@@ -5,10 +5,10 @@ output "hubResourceGroupName" {
 
 output "hubVnetId" {
   description = "The resource ID of hub virtual network."
-  value       = module.vnet.vnetId
+  value       = module.hub.hubVnetId
 }
 
 output "firewallPrivateIp" {
   description = "The private IP address of the firewall."
-  value       = module.firewall.firewallPrivateIp
+  value       = module.hub.firewallPrivateIp
 }
