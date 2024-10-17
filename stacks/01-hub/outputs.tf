@@ -12,3 +12,7 @@ output "firewallPrivateIp" {
   description = "The private IP address of the firewall."
   value       = module.hub.firewallPrivateIp
 }
+
+output "hubVnetName" {
+  value = module.hub.hubVnetName
+}

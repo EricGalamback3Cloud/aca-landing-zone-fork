@@ -13,3 +13,7 @@ output "spokePrivateEndpointsSubnetId" {
 output "logAnalyticsWorkspaceId" {
   value = module.spoke.logAnalyticsWorkspaceId
 }
+
+output "spokeVNetName" {
+  value = module.spoke.spokeVNetName
+}

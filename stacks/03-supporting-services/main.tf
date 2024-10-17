@@ -37,15 +37,15 @@ module "supportingServices" {
 
   vnetLinks = [
     {
-      "name"                = module.spoke.spokeVNetName
-      "vnetId"              = module.spoke.spokeVNetId
-      "resourceGroupName"   = module.spoke.spokeResourceGroupName
+      "name"                = data.terraform_remote_state.spoke.outputs.spokeVNetName
+      "vnetId"              = data.terraform_remote_state.spoke.outputs.spokeVNetId
+      "resourceGroupName"   = data.terraform_remote_state.spoke.outputs.spokeResourceGroupName
       "registrationEnabled" = false
     },
     {
-      "name"                = module.hub.hubVnetName
-      "vnetId"              = module.hub.hubVnetId
-      "resourceGroupName"   = module.hub.hubResourceGroupName
+      "name"                = data.terraform_remote_state.hub.outputs.hubVnetName
+      "vnetId"              = data.terraform_remote_state.hub.outputs.hubVnetId
+      "resourceGroupName"   = data.terraform_remote_state.hub.outputs.hubResourceGroupName
       "registrationEnabled" = false
   }]
   tags = var.tags
