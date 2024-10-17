@@ -22,7 +22,7 @@ module "spoke" {
   infraSubnetName                       = var.infraSubnetName
   privateEndpointsSubnetAddressPrefix   = var.privateEndpointsSubnetAddressPrefix
   applicationGatewaySubnetAddressPrefix = var.applicationGatewaySubnetAddressPrefix
-  hubVnetId                             = module.hub.hubVnetId
+  hubVnetId                             = data.terraform_remote_state.hub.outputs.vnet_id
   vmSize                                = var.vmSize
   vmAdminUsername                       = var.vmAdminUsername
   vmAdminPassword                       = var.vmAdminPassword
