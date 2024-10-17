@@ -52,3 +52,8 @@ variable "gatewaySubnetAddressPrefix" {}
 variable "infraSubnetAddressPrefix" {
   default = ""
 }
+
+variable "enableTelemetry" {
+  type    = bool
+  default = true
+}
