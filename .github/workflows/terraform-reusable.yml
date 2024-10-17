@@ -85,7 +85,7 @@ jobs:
       id: tf-plan
       run: |
         export exitcode=0
-        terraform -chdir=${{ inputs.stack_directory }} plan -detailed-exitcode -no-color -out tfplan || export exitcode=$?
+        terraform -chdir=${{ inputs.stack_directory }} plan -detailed-exitcode -no-color -out ${{ inputs.key }} || export exitcode=$?
         echo "exitcode=$exitcode" >> $GITHUB_OUTPUT
         if [ $exitcode -eq 1 ]; then
           echo "Terraform Plan Failed!"
@@ -130,7 +130,7 @@ jobs:
       uses: actions/download-artifact@v4
       with:
         name: tfplan
-        path: ${{ inputs.stack_directory }}/tfplan
+        path: ${{ inputs.stack_directory }}/${{ inputs.key }}
 
     - name: Terraform Apply
       run: terraform -chdir=${{ inputs.stack_directory }} apply -auto-approve tfplan/${{ inputs.key }}
