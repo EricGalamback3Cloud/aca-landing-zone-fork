@@ -1,27 +1,27 @@
-name: 'Deploy Supporting Services'
+name: 'Deploy Container Apps Environment'
 
 on:
   push:
     branches:
       - main
     paths:
-      - 'stacks/03-supporting-services/**'
+      - 'stacks/04-container-apps-environment/**'
   pull_request:
     branches:
       - main
     paths:
-      - 'stacks/03-supporting-services/**'
+      - 'stacks/04-container-apps-environment/**'
   workflow_dispatch:
 
 jobs:
   call-terraform-workflow:
     uses: ./.github/workflows/terraform-reusable.yml
     with:
-      stack_directory: 'stacks/03-supporting-services'
+      stack_directory: 'stacks/04-container-apps-environment'
       resource_group_name: 'kat'
       storage_account_name: 'erictftesting2'
       container_name: 'tfstate2'
-      key: 'supportingservices/tfstate'
+      key: 'containerappenv/tfstate'
       github_environment: 'erictest'
     secrets:
       AZURE_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
