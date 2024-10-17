@@ -19,7 +19,7 @@ data "terraform_remote_state" "spoke" {
 }
 
 module "containerAppsEnvironment" {
-  source                  = "./modules/container-apps-environment"
+  source                  = "./modules/container-app-environment"
   workloadName            = var.workloadName
   environment             = var.environment
   location                = var.location
