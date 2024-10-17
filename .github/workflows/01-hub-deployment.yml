@@ -14,7 +14,7 @@ on:
 
 jobs:
   call-terraform-workflow:
-    uses: ./.github/workflows/templates/terraform-template.yml
+    uses: ./.github/workflows/terraform-reusable.yml
     with:
       stack_directory: 'stacks/01-hub'
       resource_group_name: 'kat'
