@@ -8,9 +8,9 @@ data "terraform_remote_state" "hub" {
   }
 }
 
-output "hub_vnet_id" {
-  value = data.terraform_remote_state.hub.outputs.vnet_id
-}
+# output "hub_vnet_id" {
+#   value = data.terraform_remote_state.hub.outputs.vnet_id
+# }
 
 module "spoke" {
   source                                = "./modules/spoke"
