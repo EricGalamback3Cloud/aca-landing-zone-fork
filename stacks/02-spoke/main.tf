@@ -22,7 +22,7 @@ module "spoke" {
   infraSubnetName                       = var.infraSubnetName
   privateEndpointsSubnetAddressPrefix   = var.privateEndpointsSubnetAddressPrefix
   applicationGatewaySubnetAddressPrefix = var.applicationGatewaySubnetAddressPrefix
-  hubVnetId                             = data.terraform_remote_state.hub.outputs.vnet_id
+  hubVnetId                             = data.terraform_remote_state.hub.outputs.hubVnetId
   vmSize                                = var.vmSize
   vmAdminUsername                       = var.vmAdminUsername
   vmAdminPassword                       = var.vmAdminPassword
@@ -30,6 +30,6 @@ module "spoke" {
   vmLinuxAuthenticationType             = var.vmLinuxAuthenticationType
   vmJumpboxOSType                       = var.vmJumpboxOSType
   jumpboxSubnetAddressPrefix            = var.vmJumpBoxSubnetAddressPrefix
-  firewallPrivateIp                     = module.hub.firewallPrivateIp
+  firewallPrivateIp                     = data.terraform_remote_state.hub.outputs.firewallPrivateIp
   tags                                  = var.tags
 }
