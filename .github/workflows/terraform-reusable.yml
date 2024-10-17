@@ -23,14 +23,19 @@ on:
         description: 'State file key for the backend config'
         required: true
         type: string
-      # client_ip:
-      #   description: 'External IP address for Terraform plan'
-      #   required: true
-      #   type: string
-      # additional_vars:
-      #   description: 'Additional Terraform variables as key=value pairs'
-      #   required: false
-      #   type: string
+    secrets:
+      AZURE_CLIENT_ID:
+        description: 'Azure Client ID'
+        required: true
+      AZURE_SUBSCRIPTION_ID:
+        description: 'Azure Subscription ID'
+        required: true
+      AZURE_TENANT_ID:
+        description: 'Azure Tenant ID'
+        required: true
+      TF_VAR_VMLINUXSSHAUTHORIZEDKEYS:
+        description: 'SSH public key for Linux VM'
+        required: true
 
 permissions:
   id-token: write
