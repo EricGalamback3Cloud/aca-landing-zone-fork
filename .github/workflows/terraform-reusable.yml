@@ -85,7 +85,7 @@ jobs:
       id: tf-plan
       run: |
         export exitcode=0
-        terraform -chdir=${{ inputs.stack_directory }} plan -detailed-exitcode -no-color -out ${{ inputs.key }} || export exitcode=$?
+        terraform -chdir=${{ inputs.stack_directory }} plan -detailed-exitcode -no-color -out "${{ inputs.key }}" || export exitcode=$?
         echo "exitcode=$exitcode" >> $GITHUB_OUTPUT
         if [ $exitcode -eq 1 ]; then
           echo "Terraform Plan Failed!"
