@@ -5,19 +5,19 @@ on:
     branches:
       - main
     paths:
-      - 'stacks/04-container-apps-environment/**'
+      - 'stacks/04-container-app-environment/**'
   pull_request:
     branches:
       - main
     paths:
-      - 'stacks/04-container-apps-environment/**'
+      - 'stacks/04-container-app-environment/**'
   workflow_dispatch:
 
 jobs:
   call-terraform-workflow:
     uses: ./.github/workflows/terraform-reusable.yml
     with:
-      stack_directory: 'stacks/04-container-apps-environment'
+      stack_directory: 'stacks/04-container-app-environment'
       resource_group_name: 'kat'
       storage_account_name: 'erictftesting2'
       container_name: 'tfstate2'
