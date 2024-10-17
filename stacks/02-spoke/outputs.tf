@@ -17,3 +17,7 @@ output "logAnalyticsWorkspaceId" {
 output "spokeVNetName" {
   value = module.spoke.spokeVNetName
 }
+
+output "spokeInfraSubnetId" {
+  value = module.spoke.spokeInfraSubnetId
+}
