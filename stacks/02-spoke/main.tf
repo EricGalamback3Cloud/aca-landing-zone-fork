@@ -1,5 +1,5 @@
 module "spoke" {
-  source                                = "./spoke"
+  source                                = "./modules/spoke"
   workloadName                          = var.workloadName
   environment                           = var.environment
   spokeResourceGroupName                = var.spokeResourceGroupName

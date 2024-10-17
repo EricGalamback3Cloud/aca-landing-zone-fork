@@ -1,27 +1,27 @@
-name: 'Deploy Hub'
+name: 'Deploy Spoke'
 
 on:
   push:
     branches:
       - main
     paths:
-      - 'stacks/01-hub/**'
+      - 'stacks/02-spoke/**'
   pull_request:
     branches:
       - main
     paths:
-      - 'stacks/01-hub/**'
+      - 'stacks/02-spoke/**'
   workflow_dispatch:
 
 jobs:
   call-terraform-workflow:
     uses: ./.github/workflows/terraform-reusable.yml
     with:
-      stack_directory: 'stacks/01-hub'
+      stack_directory: 'stacks/02-spoke'
       resource_group_name: 'kat'
       storage_account_name: 'erictftesting2'
       container_name: 'tfstate2'
-      key: 'hub/tfstate'
+      key: 'spoke/tfstate'
       github_environment: 'erictest'
     secrets:
       AZURE_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
