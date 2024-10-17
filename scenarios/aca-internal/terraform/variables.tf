@@ -262,13 +262,12 @@ variable "azureFirewallSubnetManagementAddressPrefix" {}
 
 variable "azureFirewallSubnetAddressPrefix" {}
 
-variable "supportingResourceGroupName" {}
 
-variable "aRecords" {}
+
 
 variable "containerRegistryPullRoleAssignment" {}
 
-variable "keyVaultPullRoleAssignment" {}
+
 
 variable "appGatewayCertificatePath" {
   default = "configuration/acahello.demoapp.com.pfx"
@@ -292,9 +291,7 @@ variable "deployHelloWorldSample" {
   type    = bool
 }
 
-variable "clientIP" {
-  default = ""
-}
+
 
 variable "workloadProfiles" {
   description = "Optional, the workload profiles required by the end user. The default is 'Consumption', and is automatically added whether workload profiles are specified or not."

@@ -41,7 +41,7 @@ variable "aRecords" {}
 
 variable "tags" {}
 
-variable "containerRegistryPullRoleAssignment" {}
+
 
 variable "keyVaultPullRoleAssignment" {}
 
