@@ -9,3 +9,4 @@ vmJumpboxOSType          = "Linux"
 infraSubnetName          = "snet-infra"
 vmLinuxAuthenticationType = "sshPublicKey"
 vmJumpBoxSubnetAddressPrefix          = "10.1.2.32/27"
+spokeVnetAddressPrefixes              = ["10.1.0.0/22"]
