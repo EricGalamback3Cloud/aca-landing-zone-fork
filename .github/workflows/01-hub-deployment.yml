@@ -20,8 +20,8 @@ jobs:
       stack_directory: 'stacks/01-hub'
       resource_group_name: 'kat'
       storage_account_name: 'erictftesting2'
-      container_name: 'tfstate2'
-      key: 'hub/tfstate'
+      container_name: 'tfstate2/hub'
+      key: 'tfstate'
     secrets:
       AZURE_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
       AZURE_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
