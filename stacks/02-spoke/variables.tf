@@ -95,3 +95,8 @@ variable "vmJumpBoxSubnetAddressPrefix" {}
 variable "applicationGatewaySubnetAddressPrefix" {
   default = ""
 }
+
+variable "enableTelemetry" {
+  type    = bool
+  default = true
+}
