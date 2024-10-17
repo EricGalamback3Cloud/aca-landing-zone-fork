@@ -1,5 +1,5 @@
 module "hub" {
-  source                                     = "./hub"
+  source                                     = "./modules/hub"
   workloadName                               = var.workloadName
   environment                                = var.environment
   hubResourceGroupName                       = var.hubResourceGroupName
