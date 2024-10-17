@@ -19,7 +19,7 @@ data "terraform_remote_state" "spoke" {
 }
 
 module "supportingServices" {
-  source                              = "./modules/03-supporting-services"
+  source                              = "./modules/supporting-services"
   workloadName                        = var.workloadName
   environment                         = var.environment
   location                            = var.location

@@ -3,7 +3,7 @@ output "spokeResourceGroupName" {
 }
 
 output "spokeVNetId" {
-  value = module.spoke.vnetId
+  value = module.spoke.spokeVNetId
 }
 
 output "spokePrivateEndpointsSubnetId" {
