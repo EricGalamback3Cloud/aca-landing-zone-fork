@@ -4,6 +4,7 @@ data "terraform_remote_state" "hub" {
     storage_account_name = "erictftesting2"
     container_name       = "tfstate2"
     key                  = "hub/tfstate"
+    resource_group_name = "kat"
   }
 }
 
