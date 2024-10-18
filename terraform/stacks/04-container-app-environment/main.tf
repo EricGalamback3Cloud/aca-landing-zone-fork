@@ -25,7 +25,7 @@ resource "random_string" "random" {
 }
 
 module "naming" {
-  source       = "../../shared/terraform/modules/naming"
+  source       = "../../shared/modules/naming"
   uniqueId     = random_string.random.result
   environment  = var.environment
   workloadName = var.workloadName
@@ -33,7 +33,7 @@ module "naming" {
 }
 
 module "applicationInsights" {
-  source            = "../../shared/terraform/modules/monitoring/app-insights"
+  source            = "../../shared/modules/monitoring/app-insights"
   appInsightsName   = var.appInsightsName
   resourceGroupName = data.terraform_remote_state.spoke.outputs.spokeResourceGroupName
   location          = var.location
@@ -42,7 +42,7 @@ module "applicationInsights" {
 }
 
 module "containerAppsEnvironment" {
-  source                  = "../../shared/terraform/modules/aca-environment"
+  source                  = "../../shared/modules/aca-environment"
   environmentName         = module.naming.resourceNames["containerAppsEnvironment"]
   resourceGroupName       = data.terraform_remote_state.spoke.outputs.spokeResourceGroupName
   location                = var.location
@@ -52,7 +52,7 @@ module "containerAppsEnvironment" {
 }
 
 module "containerAppsEnvironmentPrivateDnsZone" {
-  source            = "../../shared/terraform/modules/networking/private-zones"
+  source            = "../../shared/modules/networking/private-zones"
   resourceGroupName = data.terraform_remote_state.hub.outputs.hubResourceGroupName
   zoneName          = module.containerAppsEnvironment.containerAppsEnvironmentDefaultDomain
   vnetLinks = [
