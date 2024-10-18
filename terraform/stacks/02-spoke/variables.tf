@@ -240,7 +240,3 @@ variable "appGatewaySecurityRules" {
     }
   ]
 }
-
-variable "firewallPrivateIp" {
-  type = string
-}

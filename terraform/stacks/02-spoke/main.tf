@@ -203,7 +203,7 @@ module "routeTable" {
     name             = "defaultEgressLockdown"
     addressPrefix    = "0.0.0.0/0"
     nextHopType      = "VirtualAppliance"
-    nextHopIpAddress = var.firewallPrivateIp
+    nextHopIpAddress = data.terraform_remote_state.hub.firewallPrivateIp
     }
   ]
 }
