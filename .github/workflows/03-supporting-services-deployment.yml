@@ -20,7 +20,7 @@ jobs:
       stack_directory: 'terraform/stacks/03-supporting-services'
       resource_group_name: 'kat'
       storage_account_name: 'erictftesting2'
-      container_name: 'tfstate2'
+      container_name: 'tfstate3'
       key: 'supportingservices/tfstate'
       github_environment: 'erictest'
     secrets:
