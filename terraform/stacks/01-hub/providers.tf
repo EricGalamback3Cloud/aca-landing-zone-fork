@@ -7,7 +7,10 @@ terraform {
     }
   }
   required_version = ">= 1.3.4"
+
+  backend "azurerm" {
+  }
 }
+
 provider "azurerm" {
-  features {}
 }
