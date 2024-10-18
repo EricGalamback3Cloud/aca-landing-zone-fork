@@ -1,10 +1,10 @@
 data "terraform_remote_state" "hub" {
   backend = "azurerm"
   config = {
-    storage_account_name = "erictftesting2"
-    container_name       = "tfstate3"
-    key                  = "hub/tfstate"
-    resource_group_name = "kat"
+    storage_account_name = var.state_storage_account_name
+    container_name       = var.state_container_name
+    key                  = var.hub_key
+    resource_group_name =  var.state_resource_group_name
   }
 }
 
@@ -26,6 +26,12 @@ resource "azurerm_resource_group" "spokeResourceGroup" {
   name     = var.spokeResourceGroupName != "" ? var.spokeResourceGroupName : module.naming.resourceNames["rgSpokeName"]
   location = var.location
   tags     = var.tags
+
+  lifecycle {
+    ignore_changes = [ 
+      tags
+     ]
+  }
 }
 
 module "vnet" {
