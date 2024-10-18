@@ -109,7 +109,7 @@ module "peeringHubToSpoke" {
   localVnetName  = data.terraform_remote_state.hub.outputs.hubVnetName
   remoteVnetId   = module.vnet.vnetId
   remoteVnetName = data.terraform_remote_state.hub.outputs.hubVnetName
-  remoteRgName   = data.terraform_remote_state.hub.outputs.hubVnetResourceGroup
+  remoteRgName   = data.terraform_remote_state.hub.outputs.hubResourceGroupName
 }
 
 module "vm" {
