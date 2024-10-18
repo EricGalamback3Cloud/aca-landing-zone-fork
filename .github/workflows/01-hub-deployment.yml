@@ -5,12 +5,12 @@ on:
     branches:
       - main
     paths:
-      - 'stacks/01-hub/**'
+      - 'terraform/stacks/01-hub/**'
   pull_request:
     branches:
       - main
     paths:
-      - 'stacks/01-hub/**'
+      - 'terraform/stacks/01-hub/**'
   workflow_dispatch:
 
 jobs:
