@@ -17,7 +17,7 @@ jobs:
   call-terraform-workflow:
     uses: ./.github/workflows/terraform-reusable.yml
     with:
-      stack_directory: 'stacks/01-hub'
+      stack_directory: 'terraform/stacks/01-hub'
       resource_group_name: 'kat'
       storage_account_name: 'erictftesting2'
       container_name: 'tfstate3'
