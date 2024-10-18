@@ -66,6 +66,12 @@ jobs:
       tfplanExitCode: ${{ steps.tf-plan.outputs.exitcode }}
 
     steps:
+    - name: Get IP Address
+      run: |
+        IP_ADDRESS=$(curl -s ifconfig.me)
+        echo "External IP is $IP_ADDRESS"
+        echo "IP_ADDRESS=$IP_ADDRESS" >> $GITHUB_ENV
+
     - name: Checkout
       uses: actions/checkout@v4
 
@@ -86,7 +92,7 @@ jobs:
       id: tf-plan
       run: |
         export exitcode=0
-        terraform -chdir=${{ inputs.stack_directory }} plan -detailed-exitcode -no-color -out "tfstate" || export exitcode=$?
+        terraform -chdir=${{ inputs.stack_directory }} plan -detailed-exitcode -no-color -out "tfstate" -var="clientIP=${{ env.IP_ADDRESS }}" || export exitcode=$?
         echo "exitcode=$exitcode" >> $GITHUB_OUTPUT
         if [ $exitcode -eq 1 ]; then
           echo "Terraform Plan Failed!"

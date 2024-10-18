@@ -5,7 +5,7 @@ resource "random_string" "random" {
 }
 
 module "naming" {
-  source       = "../../shared/terraform/modules/naming"
+  source       = "../shared/terraform/modules/naming"
   uniqueId     = random_string.random.result
   environment  = var.environment
   workloadName = var.workloadName
@@ -25,7 +25,7 @@ resource "azurerm_resource_group" "hubResourceGroup" {
 }
 
 module "vnet" {
-  source               = "../../shared/terraform/modules/networking/vnet"
+  source               = "../shared/terraform/modules/networking/vnet"
   networkName          = module.naming.resourceNames["vnetHub"]
   location             = var.location
   resourceGroupName    = azurerm_resource_group.hubResourceGroup.name
@@ -49,7 +49,7 @@ module "vnet" {
 }
 
 module "firewall" {
-  source                             = "../../shared/terraform/modules/firewall"
+  source                             = "../shared/terraform/modules/firewall"
   firewallName                       = module.naming.resourceNames["firewall"]
   location                           = var.location
   hubResourceGroupName               = azurerm_resource_group.hubResourceGroup.name
@@ -63,7 +63,7 @@ module "firewall" {
 }
 
 module "bastion" {
-  source                = "../../shared/terraform/modules/bastion"
+  source                = "../shared/terraform/modules/bastion"
   vnetName              = module.vnet.vnetName
   vnetResourceGroupName = azurerm_resource_group.hubResourceGroup.name
   location              = var.location
@@ -75,7 +75,7 @@ module "bastion" {
 }
 
 module "logAnalyticsWorkspace" {
-  source            = "../../shared/terraform/modules/monitoring/log-analytics"
+  source            = "../shared/terraform/modules/monitoring/log-analytics"
   resourceGroupName = azurerm_resource_group.hubResourceGroup.name
   location          = var.location
   workspaceName     = module.naming.resourceNames["logAnalyticsWorkspace"]
@@ -83,7 +83,7 @@ module "logAnalyticsWorkspace" {
 }
 
 module "diagnostics" {
-  source                  = "../../shared/terraform/modules/diagnostics"
+  source                  = "../shared/terraform/modules/diagnostics"
   logAnalyticsWorkspaceId = module.logAnalyticsWorkspace.workspaceId
   resources = [
     {
