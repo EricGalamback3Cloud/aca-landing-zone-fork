@@ -5,22 +5,22 @@ on:
     branches:
       - main
     paths:
-      - 'stacks/02-spoke/**'
+      - 'terraform/stacks/02-spoke/**'
   pull_request:
     branches:
       - main
     paths:
-      - 'stacks/02-spoke/**'
+      - 'terraform/stacks/02-spoke/**'
   workflow_dispatch:
 
 jobs:
   call-terraform-workflow:
     uses: ./.github/workflows/terraform-reusable.yml
     with:
-      stack_directory: 'stacks/02-spoke'
+      stack_directory: 'terraform/stacks/02-spoke'
       resource_group_name: 'kat'
       storage_account_name: 'erictftesting2'
-      container_name: 'tfstate2'
+      container_name: 'tfstate3'
       key: 'spoke/tfstate'
       github_environment: 'erictest'
     secrets:

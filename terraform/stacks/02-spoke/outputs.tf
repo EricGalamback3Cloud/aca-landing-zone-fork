@@ -1,27 +1,39 @@
 output "spokeResourceGroupName" {
-  value = module.spoke.spokeResourceGroupName
+  value = azurerm_resource_group.spokeResourceGroup.name
 }
 
 output "spokeVNetId" {
-  value = module.spoke.spokeVNetId
-}
-
-output "spokePrivateEndpointsSubnetId" {
-  value = module.spoke.spokePrivateEndpointsSubnetId
-}
-
-output "logAnalyticsWorkspaceId" {
-  value = module.spoke.logAnalyticsWorkspaceId
+  value = module.vnet.vnetId
 }
 
 output "spokeVNetName" {
-  value = module.spoke.spokeVNetName
+  value = module.vnet.vnetName
 }
 
 output "spokeInfraSubnetId" {
-  value = module.spoke.spokeInfraSubnetId
+  value = data.azurerm_subnet.infraSubnet.id
+}
+
+output "spokeInfraSubnetName" {
+  value = data.azurerm_subnet.infraSubnet.name
+}
+
+output "spokePrivateEndpointsSubnetId" {
+  value = data.azurerm_subnet.privateEndpointsSubnet.id
+}
+
+output "spokePrivateEndpointsSubnetName" {
+  value = data.azurerm_subnet.privateEndpointsSubnet.name
 }
 
 output "spokeApplicationGatewaySubnetId" {
-  value = module.spoke.spokeApplicationGatewaySubnetId
+  value = var.applicationGatewaySubnetAddressPrefix != "" ? data.azurerm_subnet.appGatewaySubnet[0].id : null
+}
+
+output "spokeApplicationGatewaySubnetName" {
+  value = var.applicationGatewaySubnetAddressPrefix != "" ? data.azurerm_subnet.appGatewaySubnet[0].name : null
+}
+
+output "logAnalyticsWorkspaceId" {
+  value = module.logAnalyticsWorkspace.workspaceId
 }
