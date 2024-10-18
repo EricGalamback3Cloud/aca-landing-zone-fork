@@ -1,3 +1,6 @@
+// ------------------
+//    PARAMETERS
+// ------------------
 variable "workloadName" {
   type = string
   validation {
@@ -5,7 +8,6 @@ variable "workloadName" {
     error_message = "Name must be greater at least 2 characters and not greater than 10."
   }
 }
-
 
 variable "environment" {
   type = string
@@ -18,6 +20,9 @@ variable "environment" {
 variable "location" {
   type    = string
 }
+
+variable "tags" {}
+
 variable "appInsightsName" {
   type = string
   validation {
@@ -25,6 +30,12 @@ variable "appInsightsName" {
     error_message = "Name must be greater at least 4 characters and not greater than 63."
   }
 }
+
+variable "enableTelemetry" {
+  type    = bool
+  default = true
+}
+
 variable "workloadProfiles" {
   description = "Optional, the workload profiles required by the end user. The default is 'Consumption', and is automatically added whether workload profiles are specified or not."
   type = list(object({
@@ -36,4 +47,16 @@ variable "workloadProfiles" {
   default = []
 }
 
-variable "tags" {}
+variable "hub_key" {
+  default = "hub/tfstate"
+}
+
+variable "spoke_key" {
+  default = "spoke/tfstate"
+}
+
+variable "state_storage_account_name" {}
+
+variable "state_container_name" {}
+
+variable "state_resource_group_name" {}
