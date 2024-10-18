@@ -60,10 +60,10 @@ module "applicationGateway" {
   appGatewayCertificateKeyName    = var.appGatewayCertificateKeyName
   appGatewayFQDN                  = var.appGatewayFQDN
   appGatewayPrimaryBackendEndFQDN = module.helloWorldApp.helloWorldAppFQDN
-  appGatewaySubnetId              = data.terraform_remote_state.container_app_env.outputs.spokeApplicationGatewaySubnetId
-  appGatewayLogAnalyticsId        = data.terraform_remote_state.container_app_env.outputs.logAnalyticsWorkspaceId
+  appGatewaySubnetId              = data.terraform_remote_state.spoke.outputs.spokeApplicationGatewaySubnetId
+  appGatewayLogAnalyticsId        = data.terraform_remote_state.spoke.outputs.logAnalyticsWorkspaceId
   appGatewayCertificatePath       = var.appGatewayCertificatePath
-  logAnalyticsWorkspaceId         = data.terraform_remote_state.container_app_env.outputs.logAnalyticsWorkspaceId
+  logAnalyticsWorkspaceId         = data.terraform_remote_state.spoke.outputs.logAnalyticsWorkspaceId
   tags                            = var.tags
 }
 
