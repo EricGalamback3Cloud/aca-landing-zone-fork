@@ -1,3 +1,6 @@
+// ------------------
+//    PARAMETERS
+// ------------------
 variable "workloadName" {
   type = string
   validation {
@@ -5,7 +8,6 @@ variable "workloadName" {
     error_message = "Name must be greater at least 2 characters and not greater than 10."
   }
 }
-
 
 variable "environment" {
   type = string
@@ -16,18 +18,27 @@ variable "environment" {
 }
 
 variable "location" {
-  type    = string
+  type = string
 }
 
 variable "aRecords" {}
+
+variable "tags" {}
 
 variable "containerRegistryPullRoleAssignment" {}
 
 variable "keyVaultPullRoleAssignment" {}
 
-variable "clientIP" {
-  default = ""
-}
+variable "clientIP" {}
+
+variable "logAnalyticsWorkspaceId" {}
 
 variable "supportingResourceGroupName" {}
-variable "tags" {}
+
+variable "hub_key" {
+  default = "hub/tfstate"
+}
+
+variable "spoke_key" {
+  default = "spoke/tfstate"
+}

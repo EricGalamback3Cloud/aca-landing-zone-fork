@@ -1,23 +1,23 @@
-name: 'Deploy Supporting Services'
+name: '03 Deploy Supporting Services'
 
 on:
   push:
     branches:
       - main
     paths:
-      - 'stacks/03-supporting-services/**'
+      - 'terraform/stacks/03-supporting-services/**'
   pull_request:
     branches:
       - main
     paths:
-      - 'stacks/03-supporting-services/**'
+      - 'terraform/stacks/03-supporting-services/**'
   workflow_dispatch:
 
 jobs:
   call-terraform-workflow:
     uses: ./.github/workflows/terraform-reusable.yml
     with:
-      stack_directory: 'stacks/03-supporting-services'
+      stack_directory: 'terraform/stacks/03-supporting-services'
       resource_group_name: 'kat'
       storage_account_name: 'erictftesting2'
       container_name: 'tfstate2'

@@ -1,6 +1,19 @@
-output "containerRegistryUserAssignedIdentityId" {
-  value = module.supportingServices.containerRegistryUserAssignedIdentityId
+output "containerRegistryId" {
+  value = module.containerRegistry.acrId
 }
+
+output "containerRegistryName" {
+  value = module.containerRegistry.acrName
+}
+
+output "containerRegistryUserAssignedIdentityId" {
+  value = module.containerRegistry.containerRegistryUserAssignedIdentityId
+}
+
+output "keyVaultId" {
+  value = module.keyVault.keyVaultId
+}
+
 output "keyVaultName" {
-  value = module.supportingServices.keyVaultName
+  value = module.keyVault.keyVaultName
 }
