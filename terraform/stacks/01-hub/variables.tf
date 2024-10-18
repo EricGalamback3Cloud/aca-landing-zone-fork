@@ -63,3 +63,7 @@ variable "azureFirewallSubnetManagementName" {
 variable "azureFirewallSubnetManagementAddressPrefix" {}
 
 variable "infraSubnetAddressPrefix" {}
+
+variable "clientIP" {
+  default = ""
+}
