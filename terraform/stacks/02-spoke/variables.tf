@@ -238,6 +238,10 @@ variable "appGatewaySecurityRules" {
   ]
 }
 
+variable "hub_key" {
+  default = "hub/tfstate"
+}
+
 variable "state_storage_account_name" {}
 
 variable "state_container_name" {}
