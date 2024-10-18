@@ -19,13 +19,11 @@ variable "location" {
   default = "northeurope"
 }
 
-variable "hubResourceGroupName" {
-  default = ""
-}
+variable "hubResourceGroupName" {}
 
 variable "tags" {}
 
-variable "hubVnetAddressPrefixes" {}
+variable "vnetAddressPrefixes" {}
 
 variable "enableBastion" {
   default = true
@@ -34,26 +32,34 @@ variable "enableBastion" {
 
 variable "bastionSubnetAddressPrefixes" {}
 
-variable "applicationGatewaySubnetAddressPrefix" {
-  default = ""
+variable "ddosProtectionPlanId" {
+  default = null
+  type    = string
 }
+
+variable "securityRules" {
+  default = []
+}
+
+variable "gatewaySubnetName" {
+  default = "GatewaySubnet"
+  type    = string
+}
+
+variable "gatewaySubnetAddressPrefix" {}
 
 variable "azureFirewallSubnetName" {
   default = "AzureFirewallSubnet"
   type    = string
 }
 
-variable "azureFirewallSubnetManagementAddressPrefix" {}
-
 variable "azureFirewallSubnetAddressPrefix" {}
 
-variable "gatewaySubnetAddressPrefix" {}
-
-variable "infraSubnetAddressPrefix" {
-  default = ""
+variable "azureFirewallSubnetManagementName" {
+  default = "AzureFirewallManagementSubnet" # must use this name for Firewall Basic SKU
+  type    = string
 }
 
-variable "enableTelemetry" {
-  type    = bool
-  default = true
-}
+variable "azureFirewallSubnetManagementAddressPrefix" {}
+
+variable "infraSubnetAddressPrefix" {}

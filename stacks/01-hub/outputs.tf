@@ -1,18 +1,22 @@
-
-output "hubResourceGroupName" {
-  value = module.hub.hubResourceGroupName
-}
+// ------------------
+// OUTPUTS
+// ------------------
 
 output "hubVnetId" {
   description = "The resource ID of hub virtual network."
-  value       = module.hub.hubVnetId
+  value       = module.vnet.vnetId
+}
+
+output "hubVnetName" {
+  value = module.vnet.vnetName
+}
+
+output "hubResourceGroupName" {
+  description = "The name of the Hub resource group."
+  value       = azurerm_resource_group.hubResourceGroup.name
 }
 
 output "firewallPrivateIp" {
   description = "The private IP address of the firewall."
-  value       = module.hub.firewallPrivateIp
-}
-
-output "hubVnetName" {
-  value = module.hub.hubVnetName
+  value       = module.firewall.firewallPrivateIp
 }
