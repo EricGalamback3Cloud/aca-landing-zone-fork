@@ -5,7 +5,7 @@ resource "random_string" "random" {
 }
 
 module "naming" {
-  source       = "../../../../shared/terraform/modules/naming"
+  source       = "../../../../shared/modules/naming"
   uniqueId     = random_string.random.result
   environment  = var.environment
   workloadName = var.workloadName
@@ -36,7 +36,7 @@ resource "azurerm_public_ip" "appGatewayPip" {
 }
 
 module "appGatewayAddCertificates" {
-  source                                    = "../../../../shared/terraform/modules/application-gateway/certificate-config"
+  source                                    = "../../../../shared/modules/application-gateway/certificate-config"
   keyVaultName                              = var.keyVaultName
   resourceGroupName                         = var.resourceGroupName
   appGatewayCertificateKeyName              = var.appGatewayCertificateKeyName
@@ -45,7 +45,7 @@ module "appGatewayAddCertificates" {
 }
 
 module "appGatewayConfiguration" {
-  source                = "../../../../shared/terraform/modules/application-gateway/"
+  source                = "../../../../shared/modules/application-gateway/"
   appGatewayName        = module.naming.resourceNames["applicationGateway"]
   resourceGroupName     = var.resourceGroupName
   location              = var.location
@@ -173,7 +173,7 @@ module "appGatewayConfiguration" {
 }
 
 module "diagnostics" {
-  source                  = "../../../../shared/terraform/modules/diagnostics"
+  source                  = "../../../../shared/modules/diagnostics"
   logAnalyticsWorkspaceId = var.logAnalyticsWorkspaceId
   resources = [
     {
