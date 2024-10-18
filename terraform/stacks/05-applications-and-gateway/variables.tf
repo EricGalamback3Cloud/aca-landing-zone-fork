@@ -97,6 +97,10 @@ variable "spoke_key" {
   default = "spoke/tfstate"
 }
 
+variable "container_app_env_key" {
+  default = "containerappenv/tfstate"
+}
+
 variable "supporting_services_key" {
   default = "supportingservices/tfstate"
 }

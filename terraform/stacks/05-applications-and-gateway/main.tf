@@ -32,10 +32,10 @@ data "terraform_remote_state" "supporting_services" {
 data "terraform_remote_state" "container_app_env" {
   backend = "azurerm"
   config = {
-    storage_account_name = "erictftesting2"
-    container_name       = "tfstate2"
-    key                  = "containerappenv/tfstate"
-    resource_group_name = "kat"
+    storage_account_name = var.state_storage_account_name
+    container_name       = var.state_container_name
+    key                  = var.supporting_services_key
+    resource_group_name = var.state_resource_group_name
   }
 }
 
