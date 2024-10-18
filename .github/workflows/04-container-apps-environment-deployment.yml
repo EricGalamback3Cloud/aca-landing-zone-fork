@@ -1,4 +1,4 @@
-name: 'Deploy Container Apps Environment'
+name: '04 Deploy Container Apps Environment'
 
 on:
   push:

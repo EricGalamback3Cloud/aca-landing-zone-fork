@@ -89,3 +89,20 @@ variable "lock_duration" {
   default     = "PT1M"
 }
 
+variable "hub_key" {
+  default = "hub/tfstate"
+}
+
+variable "spoke_key" {
+  default = "spoke/tfstate"
+}
+
+variable "supporting_services_key" {
+  default = "supportingservices/tfstate"
+}
+
+variable "state_storage_account_name" {}
+
+variable "state_container_name" {}
+
+variable "state_resource_group_name" {}

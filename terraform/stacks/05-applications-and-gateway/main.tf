@@ -1,30 +1,31 @@
 data "terraform_remote_state" "hub" {
   backend = "azurerm"
   config = {
-    storage_account_name = "erictftesting2"
-    container_name       = "tfstate2"
-    key                  = "hub/tfstate"
-    resource_group_name = "kat"
+    storage_account_name = var.state_storage_account_name
+    container_name       = var.state_container_name
+    key                  = var.hub_key
+    resource_group_name =  var.state_resource_group_name
   }
 }
 
 data "terraform_remote_state" "spoke" {
   backend = "azurerm"
   config = {
-    storage_account_name = "erictftesting2"
-    container_name       = "tfstate2"
-    key                  = "spoke/tfstate"
-    resource_group_name = "kat"
+    storage_account_name = var.state_storage_account_name
+    container_name       = var.state_container_name
+    key                  = var.spoke_key
+    resource_group_name = var.state_resource_group_name
   }
 }
+
 
 data "terraform_remote_state" "supporting_services" {
   backend = "azurerm"
   config = {
-    storage_account_name = "erictftesting2"
-    container_name       = "tfstate2"
-    key                  = "supportingservices/tfstate"
-    resource_group_name = "kat"
+    storage_account_name = var.state_storage_account_name
+    container_name       = var.state_container_name
+    key                  = var.supporting_services_key
+    resource_group_name = var.state_resource_group_name
   }
 }
 

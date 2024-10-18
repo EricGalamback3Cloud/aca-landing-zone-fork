@@ -1,26 +1,26 @@
-name: 'Deploy Apps and Gateway'
+name: '05 Deploy Apps and Gateway'
 
 on:
   push:
     branches:
       - main
     paths:
-      - 'stacks/05-applications-and-gateway/**'
+      - 'terraform/stacks/05-applications-and-gateway/**'
   pull_request:
     branches:
       - main
     paths:
-      - 'stacks/05-applications-and-gateway/**'
+      - 'terraform/stacks/05-applications-and-gateway/**'
   workflow_dispatch:
 
 jobs:
   call-terraform-workflow:
     uses: ./.github/workflows/terraform-reusable.yml
     with:
-      stack_directory: 'stacks/05-applications-and-gateway'
+      stack_directory: 'terraform/stacks/05-applications-and-gateway'
       resource_group_name: 'kat'
       storage_account_name: 'erictftesting2'
-      container_name: 'tfstate2'
+      container_name: 'tfstate3'
       key: 'appsandgateway/tfstate'
       github_environment: 'erictest'
     secrets:

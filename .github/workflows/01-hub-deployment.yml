@@ -1,4 +1,4 @@
-name: 'Deploy Hub'
+name: '01 Deploy Hub'
 
 on:
   push:
