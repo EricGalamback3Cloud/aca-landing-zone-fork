@@ -2,7 +2,7 @@ data "terraform_remote_state" "hub" {
   backend = "azurerm"
   config = {
     storage_account_name = "erictftesting2"
-    container_name       = "tfstate2"
+    container_name       = "tfstate3"
     key                  = "hub/tfstate"
     resource_group_name = "kat"
   }
@@ -99,7 +99,7 @@ resource "azurerm_subnet_network_security_group_association" "jumpBoxSecurityGro
 module "peeringSpokeToHub" {
   source         = "../../shared/terraform/modules/networking/peering"
   localVnetName  = module.vnet.vnetName
-  remoteVnetId   =  data.terraform_remote_state.hub.outputs.hubVnetId
+  remoteVnetId   = data.terraform_remote_state.hub.outputs.hubVnetId
   remoteVnetName = data.terraform_remote_state.hub.outputs.hubVnetName
   remoteRgName   = azurerm_resource_group.spokeResourceGroup.name
 }
