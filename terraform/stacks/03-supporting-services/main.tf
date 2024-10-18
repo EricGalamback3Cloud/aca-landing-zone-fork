@@ -52,7 +52,7 @@ module "containerRegistry" {
       "registrationEnabled" = false
   }]
   aRecords                                  = var.aRecords
-  subnetId                                  = data.terraform_remote_state.spoke.outputs.spokePrivateEndpointSubnetId
+  subnetId                                  = data.terraform_remote_state.spoke.outputs.spokePrivateEndpointsSubnetId
   containerRegistryUserAssignedIdentityName = module.naming.resourceNames["containerRegistryUserAssignedIdentity"]
   containerRegistryPullRoleAssignment       = var.containerRegistryPullRoleAssignment
   containerRegistryPep                      = module.naming.resourceNames["containerRegistryPep"]
@@ -80,7 +80,7 @@ module "keyVault" {
       "registrationEnabled" = false
   }]
   aRecords                         = var.aRecords
-  subnetId                         = data.terraform_remote_state.spoke.outputs.spokePrivateEndpointSubnetId
+  subnetId                         = data.terraform_remote_state.spoke.outputs.spokePrivateEndpointsSubnetId
   keyVaultUserAssignedIdentityName = module.naming.resourceNames["keyVaultUserAssignedIdentity"]
   keyVaultPullRoleAssignment       = var.keyVaultPullRoleAssignment
   keyVaultPep                      = module.naming.resourceNames["keyVaultPep"]
