@@ -18,9 +18,6 @@ variable "location" {
   type    = string
 }
 
-variable "hubVnetId" {
-  default = ""
-}
 
 variable "spokeResourceGroupName" {
   default = ""

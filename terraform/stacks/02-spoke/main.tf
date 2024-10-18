@@ -99,7 +99,7 @@ resource "azurerm_subnet_network_security_group_association" "jumpBoxSecurityGro
 module "peeringSpokeToHub" {
   source         = "../../shared/terraform/modules/networking/peering"
   localVnetName  = module.vnet.vnetName
-  remoteVnetId   = var.hubVnetId
+  remoteVnetId   =  data.terraform_remote_state.hub.outputs.hubVnetId
   remoteVnetName = data.terraform_remote_state.hub.outputs.hubVnetName
   remoteRgName   = azurerm_resource_group.spokeResourceGroup.name
 }
@@ -203,7 +203,7 @@ module "routeTable" {
     name             = "defaultEgressLockdown"
     addressPrefix    = "0.0.0.0/0"
     nextHopType      = "VirtualAppliance"
-    nextHopIpAddress = data.terraform_remote_state.hub.firewallPrivateIp
+    nextHopIpAddress = data.terraform_remote_state.hub.outputs.firewallPrivateIp
     }
   ]
 }
