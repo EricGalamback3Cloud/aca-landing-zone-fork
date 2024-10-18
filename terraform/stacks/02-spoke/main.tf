@@ -138,7 +138,7 @@ module "logAnalyticsWorkspace" {
 }
 
 module "diagnostics" {
-  source                  = "../../../../shared/terraform/modules/diagnostics"
+  source                  = "../../shared/terraform/modules/diagnostics"
   logAnalyticsWorkspaceId = module.logAnalyticsWorkspace.workspaceId
   resources = [
     {
