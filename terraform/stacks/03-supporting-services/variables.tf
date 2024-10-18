@@ -29,9 +29,9 @@ variable "containerRegistryPullRoleAssignment" {}
 
 variable "keyVaultPullRoleAssignment" {}
 
-variable "clientIP" {}
-
-variable "logAnalyticsWorkspaceId" {}
+variable "clientIP" {
+  default = ""
+}
 
 variable "supportingResourceGroupName" {}
 

@@ -90,7 +90,7 @@ module "keyVault" {
 
 module "diagnostics" {
   source                  = "../../shared/terraform/modules/diagnostics"
-  logAnalyticsWorkspaceId = var.logAnalyticsWorkspaceId
+  logAnalyticsWorkspaceId = data.terraform_remote_state.spoke.outputs.logAnalyticsWorkspaceId
   resources = [
     {
       type = "keyvault"
