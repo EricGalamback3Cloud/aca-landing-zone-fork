@@ -25,7 +25,7 @@ resource "random_string" "random" {
 }
 
 module "naming" {
-  source       = "../../shared/terraform/modules/naming"
+  source       = "../../shared/modules/naming"
   uniqueId     = random_string.random.result
   environment  = var.environment
   workloadName = var.workloadName
@@ -33,7 +33,7 @@ module "naming" {
 }
 
 module "containerRegistry" {
-  source                                    = "../../shared/terraform/modules/acr"
+  source                                    = "../../shared/modules/acr"
   acrName                                   = module.naming.resourceNames["containerRegistry"]
   spokeResourceGroupName                    = data.terraform_remote_state.spoke.outputs.spokeResourceGroupName
   hubResourceGroupName                      = data.terraform_remote_state.hub.outputs.hubResourceGroupName
@@ -61,7 +61,7 @@ module "containerRegistry" {
 
 
 module "keyVault" {
-  source                           = "../../shared/terraform/modules/keyvault"
+  source                           = "../../shared/modules/keyvault"
   spokeResourceGroupName           = data.terraform_remote_state.spoke.outputs.spokeResourceGroupName
   hubResourceGroupName             = data.terraform_remote_state.hub.outputs.hubResourceGroupName
   keyVaultName                     = module.naming.resourceNames["keyVault"]
@@ -89,7 +89,7 @@ module "keyVault" {
 }
 
 module "diagnostics" {
-  source                  = "../../shared/terraform/modules/diagnostics"
+  source                  = "../../shared/modules/diagnostics"
   logAnalyticsWorkspaceId = data.terraform_remote_state.spoke.outputs.logAnalyticsWorkspaceId
   resources = [
     {

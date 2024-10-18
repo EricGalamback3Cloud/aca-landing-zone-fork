@@ -15,7 +15,7 @@ resource "random_string" "random" {
 }
 
 module "naming" {
-  source       = "../../shared/terraform/modules/naming"
+  source       = "../../shared/modules/naming"
   uniqueId     = random_string.random.result
   environment  = var.environment
   workloadName = var.workloadName
@@ -35,7 +35,7 @@ resource "azurerm_resource_group" "spokeResourceGroup" {
 }
 
 module "vnet" {
-  source            = "../../shared/terraform/modules/networking/vnet"
+  source            = "../../shared/modules/networking/vnet"
   networkName       = module.naming.resourceNames["vnetSpoke"]
   location          = var.location
   resourceGroupName = azurerm_resource_group.spokeResourceGroup.name
@@ -46,7 +46,7 @@ module "vnet" {
 }
 
 module "nsgContainerAppsEnvironmentNsg" {
-  source            = "../../shared/terraform/modules/networking/nsg"
+  source            = "../../shared/modules/networking/nsg"
   nsgName           = module.naming.resourceNames["containerAppsEnvironmentNsg"]
   location          = var.location
   resourceGroupName = azurerm_resource_group.spokeResourceGroup.name
@@ -60,7 +60,7 @@ resource "azurerm_subnet_network_security_group_association" "infraSecurityGroup
 }
 
 module "nsgPrivateEndpoints" {
-  source            = "../../shared/terraform/modules/networking/nsg"
+  source            = "../../shared/modules/networking/nsg"
   nsgName           = module.naming.resourceNames["privateEndpointsNsg"]
   location          = var.location
   resourceGroupName = azurerm_resource_group.spokeResourceGroup.name
@@ -73,7 +73,7 @@ resource "azurerm_subnet_network_security_group_association" "privateEndpointSec
 }
 
 module "nsgAppGateway" {
-  source            = "../../shared/terraform/modules/networking/nsg"
+  source            = "../../shared/modules/networking/nsg"
   nsgName           = module.naming.resourceNames["applicationGatewayNsg"]
   location          = var.location
   resourceGroupName = azurerm_resource_group.spokeResourceGroup.name
@@ -88,7 +88,7 @@ resource "azurerm_subnet_network_security_group_association" "agwSecurityGroupAs
 }
 
 module "nsgJumpbox" {
-  source            = "../../shared/terraform/modules/networking/nsg"
+  source            = "../../shared/modules/networking/nsg"
   nsgName           = module.naming.resourceNames["vmJumpBoxNsg"]
   location          = var.location
   resourceGroupName = azurerm_resource_group.spokeResourceGroup.name
@@ -103,7 +103,7 @@ resource "azurerm_subnet_network_security_group_association" "jumpBoxSecurityGro
 
 
 module "peeringSpokeToHub" {
-  source         = "../../shared/terraform/modules/networking/peering"
+  source         = "../../shared/modules/networking/peering"
   localVnetName  = module.vnet.vnetName
   remoteVnetId   = data.terraform_remote_state.hub.outputs.hubVnetId
   remoteVnetName = data.terraform_remote_state.hub.outputs.hubVnetName
@@ -111,7 +111,7 @@ module "peeringSpokeToHub" {
 }
 
 module "peeringHubToSpoke" {
-  source         = "../../shared/terraform/modules/networking/peering"
+  source         = "../../shared/modules/networking/peering"
   localVnetName  = data.terraform_remote_state.hub.outputs.hubVnetName
   remoteVnetId   = module.vnet.vnetId
   remoteVnetName = data.terraform_remote_state.hub.outputs.hubVnetName
@@ -119,7 +119,7 @@ module "peeringHubToSpoke" {
 }
 
 module "vm" {
-  source                = "../../shared/terraform/modules/vms"
+  source                = "../../shared/modules/vms"
   osType                = "Linux"
   location              = var.location
   tags                  = var.tags
@@ -136,7 +136,7 @@ module "vm" {
 }
 
 module "logAnalyticsWorkspace" {
-  source            = "../../shared/terraform/modules/monitoring/log-analytics"
+  source            = "../../shared/modules/monitoring/log-analytics"
   resourceGroupName = azurerm_resource_group.spokeResourceGroup.name
   location          = var.location
   workspaceName     = module.naming.resourceNames["logAnalyticsWorkspace"]
@@ -144,7 +144,7 @@ module "logAnalyticsWorkspace" {
 }
 
 module "diagnostics" {
-  source                  = "../../shared/terraform/modules/diagnostics"
+  source                  = "../../shared/modules/diagnostics"
   logAnalyticsWorkspaceId = module.logAnalyticsWorkspace.workspaceId
   resources = [
     {
@@ -198,7 +198,7 @@ data "azurerm_subnet" "jumpboxSubnet" {
 }
 
 module "routeTable" {
-  source            = "../../shared/terraform/modules/networking/route-table"
+  source            = "../../shared/modules/networking/route-table"
   routeTableName    = module.naming.resourceNames["routeTable"]
   location          = var.location
   resourceGroupName = azurerm_resource_group.spokeResourceGroup.name
