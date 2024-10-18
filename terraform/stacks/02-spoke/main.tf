@@ -100,16 +100,16 @@ module "peeringSpokeToHub" {
   source         = "../../shared/terraform/modules/networking/peering"
   localVnetName  = module.vnet.vnetName
   remoteVnetId   = var.hubVnetId
-  remoteVnetName = local.hubVnetName
+  remoteVnetName = data.terraform_remote_state.hub.outputs.hubVnetName
   remoteRgName   = azurerm_resource_group.spokeResourceGroup.name
 }
 
 module "peeringHubToSpoke" {
   source         = "../../shared/terraform/modules/networking/peering"
-  localVnetName  = local.hubVnetName
+  localVnetName  = data.terraform_remote_state.hub.outputs.hubVnetName
   remoteVnetId   = module.vnet.vnetId
-  remoteVnetName = local.hubVnetName
-  remoteRgName   = local.hubVnetResourceGroup
+  remoteVnetName = data.terraform_remote_state.hub.outputs.hubVnetName
+  remoteRgName   = data.terraform_remote_state.hub.outputs.hubVnetResourceGroup
 }
 
 module "vm" {

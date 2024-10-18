@@ -1,8 +1,8 @@
 locals {
-  hubTokens            = split("/", var.hubVnetId)
-  hubSubscriptionId    = local.hubTokens[2]
-  hubVnetResourceGroup = local.hubTokens[4]
-  hubVnetName          = local.hubTokens[8]
+  # hubTokens            = split("/", var.hubVnetId)
+  # hubSubscriptionId    = local.hubTokens[2]
+  # hubVnetResourceGroup = local.hubTokens[4]
+  # hubVnetName          = local.hubTokens[8]
 
   defaultSubnets = [
     {
