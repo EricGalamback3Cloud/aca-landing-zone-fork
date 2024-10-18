@@ -21,3 +21,7 @@ output "spokeVNetName" {
 output "spokeInfraSubnetId" {
   value = module.spoke.spokeInfraSubnetId
 }
+
+output "spokeApplicationGatewaySubnetId" {
+  value = module.spoke.spokeApplicationGatewaySubnetId
+}
