@@ -38,7 +38,9 @@ variable "helloWorldContainerAppName" {
 # Application Gateway
 variable "appGatewayCertificateKeyName" {}
 variable "appGatewayFQDN" {}
-variable "appGatewayCertificatePath" {}
+variable "appGatewayCertificatePath" {
+  default = "configuration/acahello.demoapp.com.pfx"
+}
 
 # Service Bus
 variable "namespace_name" {
