@@ -18,13 +18,33 @@ data "terraform_remote_state" "spoke" {
   }
 }
 
+data "terraform_remote_state" "supporting_services" {
+  backend = "azurerm"
+  config = {
+    storage_account_name = "erictftesting2"
+    container_name       = "tfstate2"
+    key                  = "supportingservices/tfstate"
+    resource_group_name = "kat"
+  }
+}
+
+data "terraform_remote_state" "container_app_env" {
+  backend = "azurerm"
+  config = {
+    storage_account_name = "erictftesting2"
+    container_name       = "tfstate2"
+    key                  = "containerappenv/tfstate"
+    resource_group_name = "kat"
+  }
+}
+
 module "helloWorldApp" {
   source                                  = "./modules/hello-world"
   deployApp                               = true
-  resourceGroupName                       = module.spoke.spokeResourceGroupName
+  resourceGroupName                       = data.terraform_remote_state.spoke.outputs.spokeResourceGroupName
   helloWorldContainerAppName              = var.helloWorldContainerAppName
-  containerAppsEnvironmentId              = module.containerAppsEnvironment.containerAppsEnvironmentId
-  containerRegistryUserAssignedIdentityId = module.supportingServices.containerRegistryUserAssignedIdentityId
+  containerAppsEnvironmentId              = data.terraform_remote_state.container_app_env.outputs.containerAppsEnvironmentId
+  containerRegistryUserAssignedIdentityId = data.terraform_remote_state.supporting_services.outputs.containerRegistryUserAssignedIdentityId
   workloadProfileName                     = "Consumption"
   tags                                    = var.tags
 }
@@ -35,15 +55,15 @@ module "applicationGateway" {
   workloadName                    = var.workloadName
   environment                     = var.environment
   location                        = var.location
-  resourceGroupName               = module.spoke.spokeResourceGroupName
-  keyVaultName                    = module.supportingServices.keyVaultName
+  resourceGroupName               = data.terraform_remote_state.spoke.outputs.spokeResourceGroupName
+  keyVaultName                    = data.terraform_remote_state.supporting_services.outputs.keyVaultName
   appGatewayCertificateKeyName    = var.appGatewayCertificateKeyName
   appGatewayFQDN                  = var.appGatewayFQDN
   appGatewayPrimaryBackendEndFQDN = module.helloWorldApp.helloWorldAppFQDN
-  appGatewaySubnetId              = module.spoke.spokeApplicationGatewaySubnetId
-  appGatewayLogAnalyticsId        = module.spoke.logAnalyticsWorkspaceId
+  appGatewaySubnetId              = data.terraform_remote_state.container_app_env.outputs.spokeApplicationGatewaySubnetId
+  appGatewayLogAnalyticsId        = data.terraform_remote_state.container_app_env.outputs.logAnalyticsWorkspaceId
   appGatewayCertificatePath       = var.appGatewayCertificatePath
-  logAnalyticsWorkspaceId         = module.spoke.logAnalyticsWorkspaceId
+  logAnalyticsWorkspaceId         = data.terraform_remote_state.container_app_env.outputs.logAnalyticsWorkspaceId
   tags                            = var.tags
 }
 
@@ -51,7 +71,7 @@ module "serviceBus" {
   source = "./modules/service-bus"
   namespace_name = var.namespace_name
   topic_name = var.topic_name
-  resourceGroupName = module.spoke.spokeResourceGroupName
+  resourceGroupName = data.terraform_remote_state.spoke.outputs.spokeResourceGroupName
   location = var.location
   sku = var.sku
   enable_partitioning = true
