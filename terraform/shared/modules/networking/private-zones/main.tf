@@ -2,6 +2,12 @@ resource "azurerm_private_dns_zone" "privDnsZone" {
   name                = var.zoneName
   resource_group_name = var.resourceGroupName
   tags                = var.tags
+
+  lifecycle {
+    ignore_changes = [ 
+      tags
+     ]
+  }
 }
 
 resource "azurerm_private_dns_zone_virtual_network_link" "link" {
@@ -13,6 +19,12 @@ resource "azurerm_private_dns_zone_virtual_network_link" "link" {
   registration_enabled  = each.value.registrationEnabled
 
   tags = var.tags
+
+  lifecycle {
+    ignore_changes = [ 
+      tags
+     ]
+  }
 }
 
 resource "azurerm_private_dns_a_record" "aRecords" {
