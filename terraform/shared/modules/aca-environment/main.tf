@@ -30,7 +30,7 @@ resource "azurerm_container_app_environment_dapr_component" "pubsub" {
     count = 1
   
     name                         = var.serviceBusDaprComponentName
-    container_app_environment_id = azure_container_app_environment.environment.id
+    container_app_environment_id = azurerm_container_app_environment.environment.id
     component_type               = "pubsub.azure.servicebus"
     version                      = "v1"
     #scopes                       = var.messaging_dapr_scopes
