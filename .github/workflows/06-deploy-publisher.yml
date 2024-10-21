@@ -5,16 +5,20 @@ on:
     branches:
       - main
 
+permissions:
+  id-token: write  # Grant the GitHub Action permission to request OIDC tokens
+  contents: read   # Standard permission for checking out code
+
 env:
   REGISTRY_NAME: crtfpocljgqvdeveus.azurecr.io
   IMAGE_NAME: iotpublisher
   RESOURCE_GROUP: "rg-tfpoc-spoke-dev-eus"
   CONTAINER_APP_NAME: "ca-hello-world"
   AZURE_SUBSCRIPTION: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
-
-permissions:
-  id-token: write  # Grant the GitHub Action permission to request OIDC tokens
-  contents: read   # Standard permission for checking out code
+  ARM_CLIENT_ID: "${{ secrets.AZURE_CLIENT_ID }}"
+  ARM_SUBSCRIPTION_ID: "${{ secrets.AZURE_SUBSCRIPTION_ID }}"
+  ARM_TENANT_ID: "${{ secrets.AZURE_TENANT_ID }}"
+  ARM_USE_OIDC: true
 
 jobs:
   build:
