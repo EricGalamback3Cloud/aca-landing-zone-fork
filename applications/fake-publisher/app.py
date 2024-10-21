@@ -65,4 +65,4 @@ if __name__ == '__main__':
     start_publishing_thread()
 
     # Start the Flask server for the health check
-    app.run(port=8111)
+    app.run(port=5000)
