@@ -16,7 +16,7 @@ app = Flask(__name__)
 dapr_client = DaprClient()
 
 # Define the pub/sub topic
-PUBSUB_NAME = "asbPubSub"  # Replace with your Dapr pubsub component name
+PUBSUB_NAME = "asb-pub-sub"  # Replace with your Dapr pubsub component name
 TOPIC_NAME = "pipeline-pressure"  # The topic to which the messages are published
 
 # Function to generate fake pressure readings and publish them every 5 seconds

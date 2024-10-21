@@ -63,7 +63,7 @@ module "containerAppsEnvironment" {
   subnetId                = data.terraform_remote_state.spoke.outputs.spokeInfraSubnetId
   workloadProfiles        = var.workloadProfiles
   serviceBusNamespace =  var.namespace_name
-  serviceBusDaprComponentName = "asbPubSub"
+  serviceBusDaprComponentName = "asb-pub-sub"
 }
 
 module "containerAppsEnvironmentPrivateDnsZone" {
