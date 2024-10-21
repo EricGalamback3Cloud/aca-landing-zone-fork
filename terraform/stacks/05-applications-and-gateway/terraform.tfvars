@@ -9,12 +9,6 @@ helloWorldContainerAppName          = "ca-hello-world"
 appGatewayCertificateKeyName        = "agwcert"
 appGatewayFQDN                      = "acahello.demoapp.com"
 
-namespace_name       = "galamback3"
-topic_name           = "poc-topic"
-sku                  = "Standard"
-enable_partitioning  = true
-create_subscription  = true
-subscription_name    = "poc-subscription"
 max_delivery_count   = 10
 lock_duration        = "PT1M"
 workloadProfileName  = "Consumption"
