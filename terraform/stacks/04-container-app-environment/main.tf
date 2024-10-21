@@ -62,7 +62,7 @@ module "containerAppsEnvironment" {
   logAnalyticsWorkspaceId = data.terraform_remote_state.spoke.outputs.logAnalyticsWorkspaceId
   subnetId                = data.terraform_remote_state.spoke.outputs.spokeInfraSubnetId
   workloadProfiles        = var.workloadProfiles
-  serviceBusNamespace =  module.serviceBus.namespace_name
+  serviceBusNamespace =  var.namespace_name
   serviceBusDaprComponentName = "asbPubSub"
 }
 
