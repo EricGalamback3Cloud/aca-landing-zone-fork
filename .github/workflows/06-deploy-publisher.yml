@@ -1,0 +1,43 @@
+name: Deploy Publisher
+
+on:
+  push:
+    branches:
+      - main
+
+env:
+  REGISTRY_NAME: crtfpocljgqvdeveus.azurecr.io
+  IMAGE_NAME: iotpublisher
+  RESOURCE_GROUP: "rg-tfpoc-spoke-dev-eus"
+  CONTAINER_APP_NAME: "ca-hello-world"
+  AZURE_SUBSCRIPTION: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+
+permissions:
+  id-token: write  # Grant the GitHub Action permission to request OIDC tokens
+  contents: read   # Standard permission for checking out code
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+
+      - name: Log in to Azure Container Registry
+        run: az acr login --name ${{ env.REGISTRY_NAME }}
+
+      - name: Build and Push Docker Image
+        run: |
+          IMAGE_TAG=${{ env.REGISTRY_NAME }}/${{ env.IMAGE_NAME }}:latest
+          docker build -t $IMAGE_TAG .
+          docker push $IMAGE_TAG
+
+      - name: Deploy to Azure Container Apps
+        run: |
+          az containerapp update \
+            --name ${{ env.CONTAINER_APP_NAME }} \
+            --resource-group ${{ env.RESOURCE_GROUP }} \
+            --image ${{ env.REGISTRY_NAME }}/${{ env.IMAGE_NAME }}:latest \
+            --subscription ${{ env.AZURE_SUBSCRIPTION }}
