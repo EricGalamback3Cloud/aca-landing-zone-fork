@@ -395,3 +395,5 @@ override.tf.json
 .DS_Store
 
 tfplan
+
+.venv

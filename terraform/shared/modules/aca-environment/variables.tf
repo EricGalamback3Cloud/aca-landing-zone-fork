@@ -30,3 +30,7 @@ variable "workloadProfiles" {
     maximum_count         = number
   }))
 }
+
+variable "serviceBusNamespace" {}
+
+variable "serviceBusDaprComponentName" {}

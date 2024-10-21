@@ -64,3 +64,38 @@ variable "state_resource_group_name" {}
 variable "clientIP" {
   default = ""
 }
+
+# Service Bus
+variable "namespace_name" {
+  description = "The name of the Service Bus namespace."
+  type        = string
+}
+
+variable "topic_name" {
+  description = "The name of the Service Bus topic."
+  type        = string
+}
+
+variable "sku" {
+  description = "The SKU of the Service Bus namespace (Basic, Standard, or Premium)."
+  type        = string
+  default     = "Standard"
+}
+
+variable "enable_partitioning" {
+  description = "Enable partitioning for the topic."
+  type        = bool
+  default     = false
+}
+
+variable "create_subscription" {
+  description = "Whether to create a subscription for the topic."
+  type        = bool
+  default     = false
+}
+
+variable "subscription_name" {
+  description = "The name of the subscription."
+  type        = string
+  default     = "default-subscription" # This will be ignored if create_subscription is false
+}

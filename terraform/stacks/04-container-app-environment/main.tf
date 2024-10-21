@@ -41,6 +41,21 @@ module "applicationInsights" {
   tags              = var.tags
 }
 
+module "serviceBus" {
+  source = "./modules/service-bus"
+  namespace_name = var.namespace_name
+  topic_name = var.topic_name
+  resourceGroupName = data.terraform_remote_state.spoke.outputs.spokeResourceGroupName
+  location = var.location
+  sku = var.sku
+  enable_partitioning = true
+  create_subscription = true
+  subscription_name = var.subscription_name
+  max_delivery_count = var.max_delivery_count
+  lock_duration = var.lock_duration
+  tags = var.tags
+}
+
 module "containerAppsEnvironment" {
   source                  = "../../shared/modules/aca-environment"
   environmentName         = module.naming.resourceNames["containerAppsEnvironment"]
@@ -49,6 +64,8 @@ module "containerAppsEnvironment" {
   logAnalyticsWorkspaceId = data.terraform_remote_state.spoke.outputs.logAnalyticsWorkspaceId
   subnetId                = data.terraform_remote_state.spoke.outputs.spokeInfraSubnetId
   workloadProfiles        = var.workloadProfiles
+  serviceBusNamespace =  module.serviceBus.namespace_name
+  serviceBusDaprComponentName = "asbPubSub"
 }
 
 module "containerAppsEnvironmentPrivateDnsZone" {

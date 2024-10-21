@@ -24,9 +24,23 @@ resource "azurerm_container_app_environment" "environment" {
   }
 }
 
-# resource "azurerm_container_app_environment_dapr_component" "daprComponent" {
-#   container_app_environment_id = azurerm_container_app_environment.environment.id
-#   name = var.daprName
-#   type = ""
-#   version = ""
-# }
+resource "azurerm_container_app_environment_dapr_component" "pubsub" {
+    count = 1
+  
+    name                         = var.serviceBusDaprComponentName
+    container_app_environment_id = azurerm_container_app_environment.main.id
+    component_type               = "pubsub.azure.servicebus"
+    version                      = "v1"
+    #scopes                       = var.messaging_dapr_scopes
+  
+    metadata {
+      name  = "namespaceName"
+      value = "${var.serviceBusNamespace}.servicebus.windows.net"
+    }
+  
+    metadata {
+      name  = "azureClientId"
+      value = azurerm_user_assigned_identity.main.client_id
+    }
+}
+  

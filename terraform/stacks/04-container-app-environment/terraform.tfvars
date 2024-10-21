@@ -11,3 +11,10 @@ workloadProfiles = [{
   minimum_count         = 1
   maximum_count         = 3
 }]
+
+namespace_name       = "galamback3"
+topic_name           = "poc-topic"
+sku                  = "Standard"
+enable_partitioning  = true
+create_subscription  = true
+subscription_name    = "poc-subscription"
