@@ -1,3 +1,5 @@
+data "azurerm_client_config" "current" {}
+
 resource "azurerm_container_app_environment" "environment" {
   name                           = var.environmentName
   resource_group_name            = var.resourceGroupName
@@ -40,7 +42,8 @@ resource "azurerm_container_app_environment_dapr_component" "pubsub" {
   
     metadata {
       name  = "azureClientId"
-      value = azurerm_user_assigned_identity.main.client_id
+      #value = azurerm_user_assigned_identity.main.client_id
+      value = data.azurerm_client_config.current.object_id
     }
 }
   
