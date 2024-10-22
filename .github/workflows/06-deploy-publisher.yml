@@ -44,15 +44,15 @@ jobs:
         with:
           azcliversion: 2.31.0
           inlineScript: |
-            ACR_TOKEN=$(az acr login --name mscae --expose-token --query accessToken --output tsv)
+            ACR_TOKEN=$(az acr login --name ${{ env.REGISTRY_NAME }} --expose-token --query accessToken --output tsv)
             echo "ACR_TOKEN=$ACR_TOKEN" >> $GITHUB_ENV
       - name: 'Docker Login'
         uses: azure/docker-login@v1
         with:
-          login-server: <name>.azurecr.io
+          login-server: ${{ env.REGISTRY_NAME }}.azurecr.io
           username: 00000000-0000-0000-0000-000000000000
           password: ${{ env.ACR_TOKEN }}
-          
+
       - name: Build and Push Docker Image
         run: |
           IMAGE_TAG=${{ env.REGISTRY_NAME }}/${{ env.IMAGE_NAME }}:latest
