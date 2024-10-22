@@ -10,7 +10,7 @@ permissions:
   contents: read   # Standard permission for checking out code
 
 env:
-  REGISTRY_NAME: crtfpocljgqvdeveus.azurecr.io
+  REGISTRY_NAME: crtfpocljgqvdeveus
   IMAGE_NAME: iotpublisher
   RESOURCE_GROUP: "rg-tfpoc-spoke-dev-eus"
   CONTAINER_APP_NAME: "ca-hello-world"
