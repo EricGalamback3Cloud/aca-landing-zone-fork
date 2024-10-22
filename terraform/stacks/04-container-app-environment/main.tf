@@ -52,6 +52,8 @@ module "serviceBus" {
   create_subscription = true
   subscription_name = var.subscription_name
   tags = var.tags
+  public_network_access_enabled = false
+  subnetId = data.terraform_remote_state.spoke.outputs.spokePrivateEndpointsSubnetId
 }
 
 module "containerAppsEnvironment" {
@@ -63,7 +65,7 @@ module "containerAppsEnvironment" {
   subnetId                = data.terraform_remote_state.spoke.outputs.spokeInfraSubnetId
   workloadProfiles        = var.workloadProfiles
   serviceBusNamespace =  var.namespace_name
-  serviceBusDaprComponentName = "asb-pub-sub"
+  serviceBusDaprComponentName = "asbpubsub"
 }
 
 module "containerAppsEnvironmentPrivateDnsZone" {
