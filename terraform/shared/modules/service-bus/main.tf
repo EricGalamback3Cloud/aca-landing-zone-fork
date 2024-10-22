@@ -33,7 +33,7 @@ resource "azurerm_private_endpoint" "pe" {
     is_manual_connection = false
     #name = var.servicebus_private_endpoint_connection_name + "pe"
     name = "asb-pe2-plc"
-    private_connection_resource_id = "/subscriptions/d5736eb1-f851-4ec3-a2c5-ac8d84d029e2/resourceGroups/rg-tfpoc-spoke-dev-eus/providers/Microsoft.ServiceBus/namespaces/galamback7"
+    private_connection_resource_id = "/subscriptions/d5736eb1-f851-4ec3-a2c5-ac8d84d029e2/resourceGroups/rg-tfpoc-spoke-dev-eus/providers/Microsoft.ServiceBus/namespaces/tfpocsb"
     subresource_names = ["namespace"]
   }
   depends_on = [ azurerm_servicebus_namespace.sb ]
