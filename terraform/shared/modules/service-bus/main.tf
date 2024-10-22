@@ -6,6 +6,7 @@ resource "azurerm_servicebus_namespace" "sb" {
   tags                = var.tags
   public_network_access_enabled = var.public_network_access_enabled
   capacity = 1
+  premium_messaging_partitions = 1
 }
 
 resource "azurerm_servicebus_topic" "sbTopic" {

@@ -21,7 +21,8 @@ resource "azurerm_container_app_environment" "environment" {
 
   lifecycle {
     ignore_changes = [ 
-      id
+      id,
+      tags
      ]
   }
 }
