@@ -6,7 +6,8 @@ resource "azurerm_container_registry" "acr" {
 
   sku = "Premium"
 
-  admin_enabled                 = false
+  #TODO: Make the pipeline work without admin enabled
+  admin_enabled                 = true
   public_network_access_enabled = false
   network_rule_bypass_option    = "AzureServices"
 }

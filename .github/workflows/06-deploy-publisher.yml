@@ -10,7 +10,7 @@ permissions:
   contents: read   # Standard permission for checking out code
 
 env:
-  REGISTRY_NAME: crtfpocljgqvdeveus
+  REGISTRY_NAME: crtfpocljgqvdeveus.azurecr.io
   IMAGE_NAME: iotpublisher
   RESOURCE_GROUP: "rg-tfpoc-spoke-dev-eus"
   CONTAINER_APP_NAME: "ca-hello-world"
@@ -19,6 +19,7 @@ env:
   ARM_SUBSCRIPTION_ID: "${{ secrets.AZURE_SUBSCRIPTION_ID }}"
   ARM_TENANT_ID: "${{ secrets.AZURE_TENANT_ID }}"
   ARM_USE_OIDC: true
+
 
 jobs:
   build:
@@ -39,23 +40,20 @@ jobs:
       - name: Log in to Azure Container Registry
         run: az acr login --name ${{ env.REGISTRY_NAME }}
 
-    #   - name: 'Azure Registry Login'
-    #     uses: azure/CLI@v1
-    #     with:
-    #       azcliversion: 2.31.0
-    #       inlineScript: |
-    #         ACR_TOKEN=$(az acr login --name ${{ env.REGISTRY_NAME }} --expose-token --query accessToken --output tsv)
-    #         echo "ACR_TOKEN=$ACR_TOKEN" >> $GITHUB_ENV
-    #   - name: 'Docker Login'
-    #     uses: azure/docker-login@v1
-    #     with:
-    #       login-server: ${{ env.REGISTRY_NAME }}.azurecr.io
-    #       username: 00000000-0000-0000-0000-000000000000
-    #       password: ${{ env.ACR_TOKEN }}
+      - name: 'Docker Login'
+        uses: azure/docker-login@v1
+        with:
+          login-server: ${{ env.REGISTRY_NAME }}.azurecr.io
+          username: ${{ secrets.ACR_USERNAME }}
+          password: ${{ secrets.ACR_PASSWORD }}
+
+      - name: Set Git Commit SHA
+        run: |
+          echo "GIT_COMMIT_SHA=${GITHUB_SHA}" >> $GITHUB_ENV
 
       - name: Build and Push Docker Image
         run: |
-          IMAGE_TAG=${{ env.REGISTRY_NAME }}/${{ env.IMAGE_NAME }}:latest
+          IMAGE_TAG=${{ env.REGISTRY_NAME }}/${{ env.IMAGE_NAME }}:${{ env.GIT_COMMIT_SHA }}
           docker build -t $IMAGE_TAG .
           docker push $IMAGE_TAG
 
@@ -64,5 +62,5 @@ jobs:
           az containerapp update \
             --name ${{ env.CONTAINER_APP_NAME }} \
             --resource-group ${{ env.RESOURCE_GROUP }} \
-            --image ${{ env.REGISTRY_NAME }}/${{ env.IMAGE_NAME }}:latest \
+            --image ${{ env.REGISTRY_NAME }}/${{ env.IMAGE_NAME }}:${{ env.GIT_COMMIT_SHA }} \
             --subscription ${{ env.AZURE_SUBSCRIPTION }}
