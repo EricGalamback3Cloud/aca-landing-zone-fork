@@ -5,7 +5,7 @@ on:
     branches:
       - main
   workflow_dispatch:
-    
+
 permissions:
   id-token: write  # Grant the GitHub Action permission to request OIDC tokens
   contents: read   # Standard permission for checking out code
@@ -15,7 +15,7 @@ env:
   IMAGE_NAME: iotpublisher
   RESOURCE_GROUP: "rg-tfpoc-spoke-dev-eus"
   #TODO: Fix this name
-  CONTAINER_APP_NAME: "put-test"
+  CONTAINER_APP_NAME: "ca-hello-world"
   AZURE_SUBSCRIPTION: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
   ARM_CLIENT_ID: "${{ secrets.AZURE_CLIENT_ID }}"
   ARM_SUBSCRIPTION_ID: "${{ secrets.AZURE_SUBSCRIPTION_ID }}"
