@@ -40,12 +40,12 @@ jobs:
       - name: Log in to Azure Container Registry
         run: az acr login --name ${{ env.REGISTRY_NAME }}
 
-      - name: 'Docker Login'
-        uses: azure/docker-login@v1
-        with:
-          login-server: ${{ env.REGISTRY_NAME }}.azurecr.io
-          username: ${{ secrets.ACR_USERNAME }}
-          password: ${{ secrets.ACR_PASSWORD }}
+      # - name: 'Docker Login'
+      #   uses: azure/docker-login@v1
+      #   with:
+      #     login-server: ${{ env.REGISTRY_NAME }}.azurecr.io
+      #     username: ${{ secrets.ACR_USERNAME }}
+      #     password: ${{ secrets.ACR_PASSWORD }}
 
       - name: Set Git Commit SHA
         run: |
@@ -53,6 +53,7 @@ jobs:
 
       - name: Build and Push Docker Image
         run: |
+          docker login --username ${{ secrets.ACR_USERNAME }} --password ${{ secrets.ACR_PASSWORD }} ${{ env.REGISTRY_NAME }}.azurecr.io
           IMAGE_TAG=${{ env.REGISTRY_NAME }}/${{ env.IMAGE_NAME }}:${{ env.GIT_COMMIT_SHA }}
           cd applications/fake-publisher
           docker build -t $IMAGE_TAG .
