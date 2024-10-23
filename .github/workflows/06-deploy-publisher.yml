@@ -63,7 +63,7 @@ jobs:
 
       - name: Build and Push Docker Image
         run: |
-          docker login ${{ env.REGISTRY_NAME }}.azurecr.io --username ${{ secrets.ACR_USERNAME }} --password-stdin <<< ${{ secrets.ACR_PASSWORD }} 
+          docker login ${{ env.REGISTRY_NAME }} --username ${{ secrets.ACR_USERNAME }} --password-stdin <<< ${{ secrets.ACR_PASSWORD }} 
           IMAGE_TAG=${{ env.REGISTRY_NAME }}/${{ env.IMAGE_NAME }}:${{ env.GIT_COMMIT_SHA }}
           cd applications/fake-publisher
           docker build -t $IMAGE_TAG .
