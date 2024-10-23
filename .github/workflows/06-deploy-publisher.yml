@@ -13,7 +13,8 @@ env:
   REGISTRY_NAME: crtfpocljgqvdeveus.azurecr.io
   IMAGE_NAME: iotpublisher
   RESOURCE_GROUP: "rg-tfpoc-spoke-dev-eus"
-  CONTAINER_APP_NAME: "ca-hello-world"
+  #TODO: Fix this name
+  CONTAINER_APP_NAME: "put-test"
   AZURE_SUBSCRIPTION: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
   ARM_CLIENT_ID: "${{ secrets.AZURE_CLIENT_ID }}"
   ARM_SUBSCRIPTION_ID: "${{ secrets.AZURE_SUBSCRIPTION_ID }}"
