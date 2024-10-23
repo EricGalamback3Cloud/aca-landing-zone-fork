@@ -55,6 +55,7 @@ jobs:
       - name: Build and Push Docker Image
         run: |
           IMAGE_TAG=${{ env.REGISTRY_NAME }}/${{ env.IMAGE_NAME }}:${{ env.GIT_COMMIT_SHA }}
+          cd applications/fake-publisher
           docker build -t $IMAGE_TAG .
           docker push $IMAGE_TAG
 
