@@ -4,7 +4,8 @@ on:
   push:
     branches:
       - main
-
+  workflow_dispatch:
+    
 permissions:
   id-token: write  # Grant the GitHub Action permission to request OIDC tokens
   contents: read   # Standard permission for checking out code
