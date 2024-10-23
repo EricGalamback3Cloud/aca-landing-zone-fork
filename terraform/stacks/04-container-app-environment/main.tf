@@ -54,6 +54,7 @@ module "serviceBus" {
   tags = var.tags
   public_network_access_enabled = false
   subnetId = data.terraform_remote_state.spoke.outputs.spokePrivateEndpointsSubnetId
+  virutal_network_id = data.terraform_remote_state.spoke.outputs.spokeVNetId
 }
 
 module "containerAppsEnvironment" {

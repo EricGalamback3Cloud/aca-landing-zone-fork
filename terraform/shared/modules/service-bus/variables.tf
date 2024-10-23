@@ -61,3 +61,5 @@ variable "tags" {
 variable "subnetId" {}
 
 variable "public_network_access_enabled" {}
+
+variable "virutal_network_id" {}

@@ -36,6 +36,36 @@ resource "azurerm_private_endpoint" "pe" {
     private_connection_resource_id = "/subscriptions/d5736eb1-f851-4ec3-a2c5-ac8d84d029e2/resourceGroups/rg-tfpoc-spoke-dev-eus/providers/Microsoft.ServiceBus/namespaces/tfpocsb"
     subresource_names = ["namespace"]
   }
+
+  private_dns_zone_group {
+    name = "dns-zone-group"
+    private_dns_zone_ids = [azurerm_private_dns_zone.my_terraform_dns_zone.id]
+  }
   depends_on = [ azurerm_servicebus_namespace.sb ]
 }
 
+resource "azurerm_private_dns_zone" "my_terraform_dns_zone" {
+  name                = "privatelink.servicebus.windows.net"
+  resource_group_name = var.resource_group_name
+}
+
+resource "azurerm_private_dns_zone_virtual_network_link" "my_terraform_vnet_link" {
+  name                  = "vnet-link"
+  resource_group_name   = var.resource_group_name
+  private_dns_zone_name = azurerm_private_dns_zone.my_terraform_dns_zone.name
+  virtual_network_id    = var.virutal_network_id
+}
+
+# module "serviceBusPrivateDnsZone" {
+#   source            = "../networking/private-zones"
+#   resourceGroupName = var.resource_group_name
+#   #zoneName          = module.containerAppsEnvironment.containerAppsEnvironmentDefaultDomain
+#   zoneName = "privatelink-servicebus-windows-net"
+#   records = [
+#     {
+#       "name"        = "tfpocsb"
+#       "ipv4Address" = [azurerm_servicebus_namespace.sb.]
+#     }
+#   ]
+#   tags = var.tags
+# }
