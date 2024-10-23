@@ -71,10 +71,18 @@ jobs:
           docker build -t $IMAGE_TAG .
           docker push $IMAGE_TAG
 
+      # - name: Deploy to Azure Container Apps
+      #   run: |
+      #     az containerapp update \
+      #       --name ${{ env.CONTAINER_APP_NAME }} \
+      #       --resource-group ${{ env.RESOURCE_GROUP }} \
+      #       --image ${{ env.REGISTRY_NAME }}/${{ env.IMAGE_NAME }}:${{ env.GIT_COMMIT_SHA }} \
+      #       --subscription ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+
       - name: Deploy to Azure Container Apps
         run: |
           az containerapp update \
-            --name ${{ env.CONTAINER_APP_NAME }} \
-            --resource-group ${{ env.RESOURCE_GROUP }} \
+            --id /subscriptions/${{ env.ARM_SUBSCRIPTION_ID }}/resourceGroups/${{ env.RESOURCE_GROUP}}/providers/Microsoft.App/containerapps/${{ env.CONTAINER_APP_NAME }} \
             --image ${{ env.REGISTRY_NAME }}/${{ env.IMAGE_NAME }}:${{ env.GIT_COMMIT_SHA }} \
-            --subscription ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+
+            /subscriptions/d5736eb1-f851-4ec3-a2c5-ac8d84d029e2/resourceGroups/rg-tfpoc-spoke-dev-eus/providers/Microsoft.App/containerapps/put-test
