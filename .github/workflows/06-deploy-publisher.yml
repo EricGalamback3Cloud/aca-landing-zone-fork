@@ -77,4 +77,4 @@ jobs:
             --name ${{ env.CONTAINER_APP_NAME }} \
             --resource-group ${{ env.RESOURCE_GROUP }} \
             --image ${{ env.REGISTRY_NAME }}/${{ env.IMAGE_NAME }}:${{ env.GIT_COMMIT_SHA }} \
-            --subscription ${{ env.AZURE_SUBSCRIPTION }}
+            --subscription ${{ secrets.AZURE_SUBSCRIPTION_ID }}
