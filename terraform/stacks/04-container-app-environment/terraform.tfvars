@@ -13,8 +13,9 @@ workloadProfiles = [{
 }]
 
 namespace_name       = "tfpocsb"
-topic_name           = "poc-topic"
+topic_name           = "pipeline-pressure"
 sku                  = "Premium"
 enable_partitioning  = true
 create_subscription  = true
 subscription_name    = "poc-subscription"
+dapr_pubsub_component_name = "iotdata"

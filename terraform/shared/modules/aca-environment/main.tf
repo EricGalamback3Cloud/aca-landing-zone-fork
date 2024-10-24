@@ -27,12 +27,13 @@ resource "azurerm_container_app_environment" "environment" {
   }
 }
 
+#TODO: Make this work with the user assigned identity
 resource "azurerm_container_app_environment_dapr_component" "pubsub" {
     count = 1
   
     name                         = var.serviceBusDaprComponentName
     container_app_environment_id = azurerm_container_app_environment.environment.id
-    component_type               = "pubsub.azure.servicebus"
+    component_type               = "pubsub.azure.servicebus.topics"
     version                      = "v1"
     #scopes                       = var.messaging_dapr_scopes
   

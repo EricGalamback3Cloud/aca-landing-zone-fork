@@ -99,3 +99,8 @@ variable "subscription_name" {
   type        = string
   default     = "default-subscription" # This will be ignored if create_subscription is false
 }
+
+variable "dapr_pubsub_component_name" {
+  description = "The name of the Dapr pubsub component."
+  type        = string 
+}
