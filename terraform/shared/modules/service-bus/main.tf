@@ -24,13 +24,13 @@ resource "azurerm_servicebus_subscription" "sbSubscription" {
 
 resource "azurerm_private_endpoint" "pe" {
   location = var.location
-  name = azurerm_servicebus_namespace.sb.name + "pe"
+  name = "${azurerm_servicebus_namespace.sb.name}pe"
   resource_group_name = var.resource_group_name
   subnet_id = var.subnetId
   tags = var.tags
   private_service_connection {
     is_manual_connection = false
-    name = azurerm_servicebus_namespace.sb.name + "conn"
+    name = "${azurerm_servicebus_namespace.sb.name}conn"
     private_connection_resource_id = azurerm_servicebus_namespace.sb.id
     subresource_names = ["namespace"]
   }
@@ -50,6 +50,6 @@ resource "azurerm_private_dns_zone" "dns_zone" {
 resource "azurerm_private_dns_zone_virtual_network_link" "vnet_link" {
   name                  = "vnet-link"
   resource_group_name   = var.resource_group_name
-  private_dns_zone_name = azurerm_private_dns_zone.vnet_link.name
+  private_dns_zone_name = azurerm_private_dns_zone.dns_zone.name
   virtual_network_id    = var.virutal_network_id
 }
