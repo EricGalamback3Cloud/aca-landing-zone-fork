@@ -69,7 +69,7 @@ resource "azurerm_container_app" "publisher" {
       name   = "publisher"
       cpu    = "0.5"
       memory = "1Gi"
-      image  = data.terraform_remote_state.supporting_services.outputs.containerRegistryName + ".azurecr.io/iotpublisher:latest"
+      image  = "${data.terraform_remote_state.supporting_services.outputs.containerRegistryName}.azurecr.io/iotpublisher:latest"
     }
 
     min_replicas = 1
@@ -100,7 +100,7 @@ resource "azurerm_container_app" "subscriber" {
       name   = "subscriber"
       cpu    = "0.5"
       memory = "1Gi"
-      image  = data.terraform_remote_state.supporting_services.outputs.containerRegistryName + ".azurecr.io/iotsubscriber:latest"
+      image  = "${data.terraform_remote_state.supporting_services.outputs.containerRegistryName}.azurecr.io/iotsubscriber:latest"
     }
 
     min_replicas = 1
