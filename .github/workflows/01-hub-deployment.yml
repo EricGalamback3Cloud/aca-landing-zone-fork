@@ -18,9 +18,9 @@ jobs:
     uses: ./.github/workflows/terraform-reusable.yml
     with:
       stack_directory: 'terraform/stacks/01-hub'
-      resource_group_name: 'kat'
-      storage_account_name: 'erictftesting2'
-      container_name: 'tfstate3'
+      resource_group_name: ${{ env.TFSTATE_RESOURCE_GROUP }}
+      storage_account_name: ${{ env.TFSTATE_STORAGE_ACCOUNT }}
+      container_name: ${{ env.TFSTATE_CONTAINER_NAME }}
       key: 'hub/tfstate'
       github_environment: 'erictest'
     secrets:
