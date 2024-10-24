@@ -81,7 +81,7 @@ resource "azurerm_container_app" "publisher" {
   }
 }
 
-resource "azurerm_container_app" "publisher" {
+resource "azurerm_container_app" "publisher2" {
   name                         = "iot-publisher2"
   resource_group_name          = data.terraform_remote_state.spoke.outputs.spokeResourceGroupName
   container_app_environment_id = data.terraform_remote_state.container_app_env.outputs.containerAppsEnvironmentId
