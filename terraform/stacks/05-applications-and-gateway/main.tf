@@ -81,6 +81,37 @@ resource "azurerm_container_app" "publisher" {
   }
 }
 
+resource "azurerm_container_app" "publisher" {
+  name                         = "iot-publisher2"
+  resource_group_name          = data.terraform_remote_state.spoke.outputs.spokeResourceGroupName
+  container_app_environment_id = data.terraform_remote_state.container_app_env.outputs.containerAppsEnvironmentId
+  tags                         = var.tags
+  workload_profile_name        = var.workloadProfileName
+
+  identity {
+    type         = "UserAssigned"
+    identity_ids = [data.terraform_remote_state.supporting_services.outputs.containerRegistryUserAssignedIdentityId]
+  }
+
+  revision_mode = "Single"
+
+  template {
+    container {
+      name   = "publisher"
+      cpu    = "0.5"
+      memory = "1Gi"
+      image  = "crtfpocljgqvdeveus.azurecr.io/iotpublisher:latest"
+    }
+
+    min_replicas = 1
+    max_replicas = 10
+  }
+
+  dapr {
+    app_id  = "iot-publisher2"
+  }
+}
+
 resource "azurerm_container_app" "subscriber" {
   name                         = "iot-subscriber"
   resource_group_name          = data.terraform_remote_state.spoke.outputs.spokeResourceGroupName
