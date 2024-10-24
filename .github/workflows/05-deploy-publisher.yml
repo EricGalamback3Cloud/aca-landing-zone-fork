@@ -1,0 +1,62 @@
+name: Deploy Publisher
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'applications/fake-publisher/**'
+  workflow_dispatch:
+
+permissions:
+  id-token: write  # Grant the GitHub Action permission to request OIDC tokens
+  contents: read   # Standard permission for checking out code
+
+env:
+  REGISTRY_NAME: crtfpocljgqvdeveus.azurecr.io
+  IMAGE_NAME: iotpublisher
+  RESOURCE_GROUP: "rg-tfpoc-spoke-dev-eus"
+  CONTAINER_APP_NAME: "iot-publisher"
+  AZURE_SUBSCRIPTION: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+  ARM_CLIENT_ID: "${{ secrets.AZURE_CLIENT_ID }}"
+  ARM_SUBSCRIPTION_ID: "${{ secrets.AZURE_SUBSCRIPTION_ID }}"
+  ARM_TENANT_ID: "${{ secrets.AZURE_TENANT_ID }}"
+  ARM_USE_OIDC: true
+
+
+jobs:
+  build:
+    runs-on: self-hosted
+    environment: "erictest"
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Set Git Commit SHA
+        run: |
+          echo "GIT_COMMIT_SHA=${GITHUB_SHA}" >> $GITHUB_ENV
+      - name: Build and Push Docker Image
+        run: |
+          docker login ${{ env.REGISTRY_NAME }} --username ${{ secrets.ACR_USERNAME }} --password-stdin <<< ${{ secrets.ACR_PASSWORD }} 
+          IMAGE_TAG=${{ env.REGISTRY_NAME }}/${{ env.IMAGE_NAME }}:latest
+          cd applications/fake-publisher
+          docker build -t $IMAGE_TAG .
+          docker push $IMAGE_TAG
+
+      # - name: Build and Push Docker Image
+      #   run: |
+      #     docker login ${{ env.REGISTRY_NAME }} --username ${{ secrets.ACR_USERNAME }} --password-stdin <<< ${{ secrets.ACR_PASSWORD }} 
+      #     IMAGE_TAG=${{ env.REGISTRY_NAME }}/${{ env.IMAGE_NAME }}:${{ env.GIT_COMMIT_SHA }}
+      #     cd applications/fake-publisher
+      #     docker build -t $IMAGE_TAG .
+      #     docker push $IMAGE_TAG
+
+      # The app doesn't exist yet, so we can't update it    
+      # - name: Deploy to Azure Container Apps
+      #   run: |
+      #     az containerapp update \
+      #       --name ${{ env.CONTAINER_APP_NAME }} \
+      #       --resource-group ${{ env.RESOURCE_GROUP }} \
+      #       --image ${{ env.REGISTRY_NAME }}/${{ env.IMAGE_NAME }}:${{ env.GIT_COMMIT_SHA }} \
+      #       --subscription ${{ secrets.AZURE_SUBSCRIPTION_ID }}
